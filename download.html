@@ -5,16 +5,83 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Скачать Universe Craft Add-on</title>
     <style>
-        body { font-family: Arial, sans-serif; background: linear-gradient(to bottom, #1a1a1a, #3a3a3a); color: #fff; margin: 0; padding: 0; }
-        header { background-color: #2e7d32; padding: 20px; text-align: center; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4); }
-        h1 { margin: 0; font-size: 2.5em; }
-        .content { max-width: 900px; margin: 40px auto; padding: 30px; background-color: rgba(255, 255, 255, 0.05); border-radius: 15px; }
-        h2 { color: #ffd700; text-align: center; }
-        .filter-btn { padding: 12px 30px; background-color: #ffd700; color: #1a1a1a; border: none; border-radius: 8px; cursor: pointer; }
-        .version-info { display: none; margin-top: 20px; padding: 15px; background-color: rgba(255, 255, 255, 0.1); border-radius: 10px; }
-        .download-btn { padding: 12px 30px; background-color: #ffd700; color: #1a1a1a; text-decoration: none; border-radius: 8px; display: inline-block; margin-top: 20px; }
-        .highlight-orange { color: #ff8c00; text-decoration: underline; }
-        footer { background-color: #1a1a1a; padding: 15px; text-align: center; }
+        body { 
+            font-family: Arial, sans-serif; 
+            background: linear-gradient(to bottom, #1a1a1a, #3a3a3a); 
+            color: #fff; 
+            margin: 0; 
+            padding: 0; 
+        }
+        header { 
+            background-color: #2e7d32; 
+            padding: 20px; 
+            text-align: center; 
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4); 
+        }
+        h1 { 
+            margin: 0; 
+            font-size: 2.5em; 
+            animation: fadeIn 1.5s ease; 
+        }
+        .content { 
+            max-width: 900px; 
+            margin: 40px auto; 
+            padding: 30px; 
+            background-color: rgba(255, 255, 255, 0.05); 
+            border-radius: 15px; 
+            animation: fadeInUp 1.2s ease; 
+        }
+        h2 { 
+            color: #ffd700; 
+            text-align: center; 
+        }
+        .filter-btn { 
+            padding: 12px 30px; 
+            background-color: #ffd700; 
+            color: #1a1a1a; 
+            border: none; 
+            border-radius: 8px; 
+            cursor: pointer; 
+            margin: 10px; 
+            transition: transform 0.3s ease, background-color 0.4s ease; 
+        }
+        .filter-btn:hover { 
+            transform: scale(1.05); 
+            background-color: #e6c200; 
+        }
+        .download-link { 
+            display: none; 
+            margin-top: 20px; 
+            padding: 15px; 
+            background-color: rgba(255, 255, 255, 0.1); 
+            border-radius: 10px; 
+            animation: fadeInUp 0.8s ease; 
+        }
+        .download-btn { 
+            padding: 12px 30px; 
+            background-color: #ffd700; 
+            color: #1a1a1a; 
+            text-decoration: none; 
+            border-radius: 8px; 
+            display: inline-block; 
+            transition: transform 0.3s ease; 
+        }
+        .download-btn:hover { 
+            transform: scale(1.05); 
+        }
+        footer { 
+            background-color: #1a1a1a; 
+            padding: 15px; 
+            text-align: center; 
+        }
+        @keyframes fadeIn { 
+            from { opacity: 0; } 
+            to { opacity: 1; } 
+        }
+        @keyframes fadeInUp { 
+            from { opacity: 0; transform: translateY(20px); } 
+            to { opacity: 1; transform: translateY(0); } 
+        }
     </style>
 </head>
 <body>
@@ -22,30 +89,28 @@
         <h1>Скачать Universe Craft Add-on</h1>
     </header>
     <div class="content">
-        <h2>Скачать</h2>
-        <p>Нажми на кнопку ниже, чтобы увидеть версию и совместимость.</p>
-        <button class="filter-btn" id="filterBtn">Показать версию</button>
-        <div class="version-info" id="versionInfo">
-            <p>Версия: <strong>1.0</strong></p>
-            <p>Совместимость: <strong>1.21.60</strong> <span class="highlight-orange">нениже</span></p>
+        <h2>Выберите версию</h2>
+        <button class="filter-btn" data-version="1.21.60">1.21.60</button>
+        <button class="filter-btn" data-version="1.21.50">1.21.50</button>
+        <div class="download-link" id="downloadLink">
+            <p>Выбрана версия: <strong id="selectedVersion"></strong></p>
+            <a href="https://drive.google.com/file/d/1Qpwetu7GR7jNJhOvqgPNBIHbajFiUkRH/view?usp=drivesdk" target="_blank" class="download-btn">Скачать Universe Craft</a>
         </div>
-        <p>Скачай аддон и начни играть!</p>
-        <a href="https://drive.google.com/file/d/1Qpwetu7GR7jNJhOvqgPNBIHbajFiUkRH/view?usp=drivesdk" target="_blank" class="download-btn">Скачать Universe Craft 1.0</a>
     </div>
     <footer>
         <p>© права защищены 2025г</p>
     </footer>
     <script>
-        const filterBtn = document.getElementById('filterBtn');
-        const versionInfo = document.getElementById('versionInfo');
-        filterBtn.addEventListener('click', () => {
-            if (versionInfo.style.display === 'block') {
-                versionInfo.style.display = 'none';
-                filterBtn.textContent = 'Показать версию';
-            } else {
-                versionInfo.style.display = 'block';
-                filterBtn.textContent = 'Скрыть версию';
-            }
+        const filterBtns = document.querySelectorAll('.filter-btn');
+        const downloadLink = document.getElementById('downloadLink');
+        const selectedVersion = document.getElementById('selectedVersion');
+
+        filterBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                const version = btn.getAttribute('data-version');
+                selectedVersion.textContent = version;
+                downloadLink.style.display = 'block';
+            });
         });
     </script>
 </body>
