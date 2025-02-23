@@ -5,111 +5,188 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Скачать Universe Craft Add-on</title>
     <style>
-        body { 
-            font-family: Arial, sans-serif; 
-            background: linear-gradient(to bottom, #1a1a1a, #3a3a3a); 
-            color: #fff; 
-            margin: 0; 
-            padding: 0; 
+        body {
+            font-family: Arial, sans-serif;
+            background: radial-gradient(circle at center, #1a1a1a, #3a3a3a);
+            color: #fff;
+            margin: 0;
+            padding: 0;
+            position: relative;
         }
-        header { 
-            background-color: #2e7d32; 
-            padding: 20px; 
-            text-align: center; 
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4); 
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><circle cx="50" cy="50" r="1" fill="white" opacity="0.5"/></svg>') repeat;
+            animation: twinkle 3s infinite alternate;
+            z-index: -1;
         }
-        h1 { 
-            margin: 0; 
-            font-size: 2.5em; 
-            animation: fadeIn 1.5s ease; 
+        @keyframes twinkle {
+            0% { opacity: 0.5; }
+            100% { opacity: 1; }
         }
-        .content { 
-            max-width: 900px; 
-            margin: 40px auto; 
-            padding: 30px; 
-            background-color: rgba(255, 255, 255, 0.05); 
-            border-radius: 15px; 
-            animation: fadeInUp 1.2s ease; 
+        header {
+            background-color: #2e7d32;
+            padding: 20px;
+            text-align: center;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+            position: relative;
         }
-        h2 { 
-            color: #ffd700; 
-            text-align: center; 
+        h1 {
+            margin: 0;
+            font-size: 2.5em;
+            animation: fadeIn 1.5s ease;
         }
-        .filter-btn { 
-            padding: 12px 30px; 
-            background-color: #ffd700; 
-            color: #1a1a1a; 
-            border: none; 
-            border-radius: 8px; 
-            cursor: pointer; 
-            margin: 10px; 
-            transition: transform 0.3s ease, background-color 0.4s ease; 
+        .hamburger {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            font-size: 30px;
+            cursor: pointer;
+            color: #fff;
+            transition: transform 0.4s ease;
         }
-        .filter-btn:hover { 
-            transform: scale(1.05); 
-            background-color: #e6c200; 
+        .hamburger:hover {
+            transform: rotate(90deg);
         }
-        .download-link { 
-            display: none; 
-            margin-top: 20px; 
-            padding: 15px; 
-            background-color: rgba(255, 255, 255, 0.1); 
-            border-radius: 10px; 
-            animation: fadeInUp 0.8s ease; 
+        .menu {
+            position: fixed;
+            top: 0;
+            right: -300px;
+            width: 250px;
+            height: 100%;
+            background-color: #333;
+            padding: 20px;
+            transition: right 0.6s ease;
         }
-        .download-btn { 
-            padding: 12px 30px; 
-            background-color: #ffd700; 
-            color: #1a1a1a; 
-            text-decoration: none; 
-            border-radius: 8px; 
-            display: inline-block; 
-            transition: transform 0.3s ease; 
+        .menu.active {
+            right: 0;
         }
-        .download-btn:hover { 
-            transform: scale(1.05); 
+        .menu a {
+            display: block;
+            color: #1a1a1a;
+            text-decoration: none;
+            font-size: 1.2em;
+            margin: 20px 0;
+            padding: 10px;
+            background-color: #ffd700;
+            border-radius: 5px;
+            text-align: center;
+            transition: background-color 0.4s ease, transform 0.3s ease;
         }
-        footer { 
-            background-color: #1a1a1a; 
-            padding: 15px; 
-            text-align: center; 
+        .menu a:hover {
+            background-color: #e6c200;
+            transform: scale(1.05);
         }
-        @keyframes fadeIn { 
-            from { opacity: 0; } 
-            to { opacity: 1; } 
+        .content {
+            max-width: 900px;
+            margin: 40px auto;
+            padding: 30px;
+            background-color: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            animation: fadeInUp 1.2s ease;
         }
-        @keyframes fadeInUp { 
-            from { opacity: 0; transform: translateY(20px); } 
-            to { opacity: 1; transform: translateY(0); } 
+        h2 {
+            color: #ffd700;
+            text-align: center;
+        }
+        .filter-btn {
+            padding: 12px 30px;
+            background-color: #ffd700;
+            color: #1a1a1a;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            margin: 10px;
+            transition: transform 0.3s ease, background-color 0.4s ease;
+        }
+        .filter-btn:hover {
+            transform: scale(1.05);
+            background-color: #e6c200;
+        }
+        .download-info {
+            display: none;
+            margin-top: 20px;
+            padding: 15px;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            animation: fadeInUp 0.8s ease;
+        }
+        .download-btn {
+            padding: 12px 30px;
+            background-color: #ffd700;
+            color: #1a1a1a;
+            text-decoration: none;
+            border-radius: 8px;
+            display: inline-block;
+            margin-top: 20px;
+            transition: transform 0.3s ease;
+        }
+        .download-btn:hover {
+            transform: scale(1.05);
+        }
+        footer {
+            background-color: #1a1a1a;
+            padding: 15px;
+            text-align: center;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
         }
     </style>
 </head>
 <body>
     <header>
         <h1>Скачать Universe Craft Add-on</h1>
+        <div class="hamburger">☰</div>
     </header>
+    <div class="menu" id="menu">
+        <a href="index.html">Главная страница</a>
+        <a href="download.html">Скачать</a>
+        <a href="version.html">Версия сайта - v1.00 Website</a>
+    </div>
     <div class="content">
         <h2>Выберите версию</h2>
         <button class="filter-btn" data-version="1.21.60">1.21.60</button>
         <button class="filter-btn" data-version="1.21.50">1.21.50</button>
-        <div class="download-link" id="downloadLink">
+        <div class="download-info" id="downloadInfo">
             <p>Выбрана версия: <strong id="selectedVersion"></strong></p>
             <a href="https://drive.google.com/file/d/1Qpwetu7GR7jNJhOvqgPNBIHbajFiUkRH/view?usp=drivesdk" target="_blank" class="download-btn">Скачать Universe Craft</a>
+            <h3>Как установить аддон и включить эксперименты</h3>
+            <p>1. Скачайте файл аддона по ссылке выше.<br>
+               2. Откройте файл в Minecraft Bedrock Edition (нажмите на него, и игра автоматически импортирует аддон).<br>
+               3. Зайдите в настройки мира и активируйте аддон.<br>
+               4. Включите экспериментальные функции, если это необходимо для работы аддона.<br>
+               5. Запустите мир и наслаждайтесь игрой!</p>
         </div>
     </div>
     <footer>
         <p>© права защищены 2025г</p>
     </footer>
     <script>
+        const hamburger = document.querySelector('.hamburger');
+        const menu = document.querySelector('.menu');
+        hamburger.addEventListener('click', () => {
+            menu.classList.toggle('active');
+        });
+
         const filterBtns = document.querySelectorAll('.filter-btn');
-        const downloadLink = document.getElementById('downloadLink');
+        const downloadInfo = document.getElementById('downloadInfo');
         const selectedVersion = document.getElementById('selectedVersion');
 
         filterBtns.forEach(btn => {
             btn.addEventListener('click', () => {
                 const version = btn.getAttribute('data-version');
                 selectedVersion.textContent = version;
-                downloadLink.style.display = 'block';
+                downloadInfo.style.display = 'block';
             });
         });
     </script>
