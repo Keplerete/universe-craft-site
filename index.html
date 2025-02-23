@@ -5,90 +5,106 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Universe Craft Add-on</title>
     <style>
-        body { 
-            font-family: Arial, sans-serif; 
-            background: linear-gradient(to bottom, #1a1a1a, #3a3a3a); 
-            color: #fff; 
-            margin: 0; 
-            padding: 0; 
+        body {
+            font-family: Arial, sans-serif;
+            background: radial-gradient(circle at center, #1a1a1a, #3a3a3a);
+            color: #fff;
+            margin: 0;
+            padding: 0;
+            position: relative;
         }
-        header { 
-            background-color: #2e7d32; 
-            padding: 20px; 
-            text-align: center; 
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4); 
-            position: relative; 
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><circle cx="50" cy="50" r="1" fill="white" opacity="0.5"/></svg>') repeat;
+            animation: twinkle 3s infinite alternate;
+            z-index: -1;
         }
-        h1 { 
-            margin: 0; 
-            font-size: 2.5em; 
-            animation: fadeIn 1.5s ease; 
+        @keyframes twinkle {
+            0% { opacity: 0.5; }
+            100% { opacity: 1; }
         }
-        .hamburger { 
-            position: absolute; 
-            top: 20px; 
-            right: 20px; 
-            font-size: 30px; 
-            cursor: pointer; 
-            color: #fff; 
-            transition: transform 0.4s ease; 
+        header {
+            background-color: #2e7d32;
+            padding: 20px;
+            text-align: center;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+            position: relative;
         }
-        .hamburger:hover { 
-            transform: rotate(90deg); 
+        h1 {
+            margin: 0;
+            font-size: 2.5em;
+            animation: fadeIn 1.5s ease;
         }
-        .menu { 
-            position: fixed; 
-            top: 0; 
-            right: -300px; 
-            width: 250px; 
-            height: 100%; 
-            background-color: #333; 
-            padding: 20px; 
-            transition: right 0.6s ease; 
+        .hamburger {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            font-size: 30px;
+            cursor: pointer;
+            color: #fff;
+            transition: transform 0.4s ease;
         }
-        .menu.active { 
-            right: 0; 
+        .hamburger:hover {
+            transform: rotate(90deg);
         }
-        .menu a { 
-            display: block; 
-            color: #1a1a1a; 
-            text-decoration: none; 
-            font-size: 1.2em; 
-            margin: 20px 0; 
-            padding: 10px; 
-            background-color: #ffd700; 
-            border-radius: 5px; 
-            text-align: center; 
-            transition: background-color 0.4s ease, transform 0.3s ease; 
+        .menu {
+            position: fixed;
+            top: 0;
+            right: -300px;
+            width: 250px;
+            height: 100%;
+            background-color: #333;
+            padding: 20px;
+            transition: right 0.6s ease;
         }
-        .menu a:hover { 
-            background-color: #e6c200; 
-            transform: scale(1.05); 
+        .menu.active {
+            right: 0;
         }
-        .content { 
-            max-width: 900px; 
-            margin: 40px auto; 
-            padding: 30px; 
-            background-color: rgba(255, 255, 255, 0.05); 
-            border-radius: 15px; 
-            animation: fadeInUp 1.2s ease; 
+        .menu a {
+            display: block;
+            color: #1a1a1a;
+            text-decoration: none;
+            font-size: 1.2em;
+            margin: 20px 0;
+            padding: 10px;
+            background-color: #ffd700;
+            border-radius: 5px;
+            text-align: center;
+            transition: background-color 0.4s ease, transform 0.3s ease;
         }
-        h2 { 
-            color: #ffd700; 
-            text-align: center; 
+        .menu a:hover {
+            background-color: #e6c200;
+            transform: scale(1.05);
         }
-        footer { 
-            background-color: #1a1a1a; 
-            padding: 15px; 
-            text-align: center; 
+        .content {
+            max-width: 900px;
+            margin: 40px auto;
+            padding: 30px;
+            background-color: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            animation: fadeInUp 1.2s ease;
         }
-        @keyframes fadeIn { 
-            from { opacity: 0; } 
-            to { opacity: 1; } 
+        h2 {
+            color: #ffd700;
+            text-align: center;
         }
-        @keyframes fadeInUp { 
-            from { opacity: 0; transform: translateY(20px); } 
-            to { opacity: 1; transform: translateY(0); } 
+        footer {
+            background-color: #1a1a1a;
+            padding: 15px;
+            text-align: center;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
         }
     </style>
 </head>
@@ -104,10 +120,12 @@
     </div>
     <div class="content">
         <h2>Universe Craft Add-on</h2>
-        <p>Universe Craft — это уникальный аддон для Minecraft Bedrock Edition, созданный для расширения игрового опыта. Идея аддона заключается в том, чтобы добавить новые измерения, предметы и механики, которые позволяют игрокам исследовать вселенную Minecraft по-новому.</p>
-        <p>Аддон был создан <strong>OHNIXDOX777</strong>, известным в сообществе Bedrock Edition за свои креативные проекты. Universe Craft — это его попытка привнести больше приключений и возможностей для творчества в игру.</p>
-        <p>С Universe Craft вы сможете строить космические корабли, исследовать далёкие планеты и создавать уникальные предметы, которых нет в ванильной версии Minecraft. Этот аддон идеально подходит для тех, кто любит исследования и приключения!</p>
-        </div>
+        <p>Universe Craft — это уникальный аддон для Minecraft Bedrock Edition, созданный для расширения игрового опыта. Разработанный автором <strong>OHNIXDOX777</strong>, известным в сообществе Bedrock Edition, этот аддон добавляет множество новых возможностей, которые позволяют игрокам исследовать и творить по-новому. Аддон вдохновлён идеей предоставить игрокам больше инструментов для творчества и приключений, расширяя границы ванильной версии Minecraft.</p>
+        <p>В Universe Craft вы найдёте новые <strong>предметы</strong>, такие как кристаллические руды, которые можно использовать для создания уникальных инструментов и оружия. Эти инструменты обладают особыми свойствами, такими как увеличенная прочность или способность добывать редкие ресурсы. Также аддон добавляет новые <strong>блоки</strong>, которые можно использовать для строительства и декорации, придавая вашим постройкам уникальный вид.</p>
+        <p>Для любителей сражений в аддоне предусмотрено новое <strong>оружие</strong>, такое как лазерные мечи и бластеры, которые можно улучшать с помощью специальных материалов. Кроме того, Universe Craft вводит новую <strong>одежду</strong>, дающую бонусы, такие как увеличенная скорость передвижения или повышенная защита от урона. Эти предметы можно крафтить или находить в сундуках по всему миру.</p>
+        <p>Аддон также добавляет новых <strong>сущностей</strong>: от дружелюбных NPC, которые могут торговать с вами, до опасных монстров, охраняющих ценные ресурсы. Для тех, кто любит экспериментировать, в Universe Craft есть система <strong>химических элементов</strong>, позволяющая создавать зелья и улучшенные инструменты. Эта система основана на комбинировании различных элементов, что добавляет глубины игровому процессу.</p>
+        <p>Universe Craft — это идеальный выбор для игроков, которые хотят большего от Minecraft. С этим аддоном вы сможете погрузиться в мир новых возможностей, исследований и творчества, не выходя за рамки любимой игры.</p>
+    </div>
     <footer>
         <p>© права защищены 2025г</p>
     </footer>
