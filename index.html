@@ -7,51 +7,80 @@
     <style>
         body {
             font-family: 'Arial', sans-serif;
-            background: linear-gradient(to bottom, #2a2a2a, #4a4a4a);
+            background: linear-gradient(to bottom, #1a1a1a, #3a3a3a);
             color: #fff;
             margin: 0;
             padding: 0;
+            overflow-x: hidden;
         }
         header {
-            background-color: #3d8b40;
+            background-color: #2e7d32;
             padding: 20px;
             text-align: center;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+            position: relative;
         }
         h1 {
             margin: 0;
             font-size: 2.5em;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+            text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.5);
         }
-        nav {
+        .hamburger {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            font-size: 30px;
+            cursor: pointer;
+            color: #fff;
+            transition: transform 0.3s ease;
+        }
+        .hamburger:hover {
+            transform: scale(1.1);
+        }
+        .menu {
+            display: none;
+            position: fixed;
+            top: 0;
+            right: 0;
+            width: 250px;
+            height: 100%;
             background-color: #333;
-            padding: 10px;
-            text-align: center;
+            box-shadow: -4px 0 10px rgba(0, 0, 0, 0.5);
+            padding: 20px;
+            transition: transform 0.3s ease;
+            transform: translateX(100%);
         }
-        nav a {
+        .menu.active {
+            display: block;
+            transform: translateX(0);
+        }
+        .menu a {
+            display: block;
             color: #fff;
             text-decoration: none;
-            margin: 0 20px;
             font-size: 1.2em;
-            transition: color 0.3s;
+            margin: 20px 0;
+            transition: color 0.3s ease;
         }
-        nav a:hover {
-            color: #ffcc00;
+        .menu a:hover {
+            color: #ffd700;
         }
         .content {
             max-width: 900px;
-            margin: 30px auto;
-            padding: 25px;
-            background-color: rgba(255, 255, 255, 0.1);
-            border-radius: 10px;
-            box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+            margin: 40px auto;
+            padding: 30px;
+            background-color: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+            transition: opacity 0.5s ease;
         }
         h2 {
-            color: #ffcc00;
+            color: #ffd700;
             text-align: center;
+            margin-bottom: 20px;
         }
         p {
-            line-height: 1.6;
+            line-height: 1.8;
         }
         .highlight-orange {
             color: #ff8c00;
@@ -59,54 +88,73 @@
         }
         .download-btn {
             display: inline-block;
-            padding: 12px 25px;
-            background-color: #ffcc00;
-            color: #333;
+            padding: 12px 30px;
+            background-color: #ffd700;
+            color: #1a1a1a;
             text-decoration: none;
-            border-radius: 5px;
+            border-radius: 8px;
             font-weight: bold;
-            transition: background-color 0.3s;
+            transition: background-color 0.3s ease, transform 0.2s ease;
         }
         .download-btn:hover {
-            background-color: #e6b800;
+            background-color: #e6c200;
+            transform: scale(1.05);
+        }
+        .version-filter {
+            margin: 20px 0;
+            font-style: italic;
         }
         footer {
-            background-color: #333;
+            background-color: #1a1a1a;
             padding: 15px;
             text-align: center;
-            position: fixed;
-            width: 100%;
+            position: relative;
             bottom: 0;
+            width: 100%;
         }
     </style>
 </head>
 <body>
     <header>
         <h1>Universe Craft Add-on</h1>
+        <div class="hamburger">☰</div>
     </header>
 
-    <nav>
+    <div class="menu" id="menu">
         <a href="#home">Главная страница</a>
         <a href="#download">Скачать</a>
-    </nav>
-
-    <div class="content" id="home">
-        <h2>Universe Craft Add-on</h2>
-        <p>Добро пожаловать в <strong>Universe Craft</strong> — уникальный аддон для Minecraft Bedrock Edition, который переносит вас в мир космических приключений! Исследуйте новые планеты, создавайте космические технологии и открывайте неизведанные горизонты.</p>
-        <p>Этот аддон создан талантливым автором <strong>OHNIXDOX777</strong> (известным в Bedrock Edition) для всех, кто мечтает о звёздах в любимой игре.</p>
     </div>
 
+    <div class="content" id="home">
+        <h2>Universe Craft Add-on v1.00</h2>
+        <p>Добро пожаловать в <strong>Universe Craft</strong> — уникальный аддон для Minecraft Bedrock Edition, созданный для расширения возможностей игры! Этот аддон добавляет новые предметы, блоки и механики, которые делают ваш игровой опыт более разнообразным и увлекательным.</p>
+        <p>Universe Craft — это проект, разработанный автором <strong>OHNIXDOX777</strong>, известным в сообществе Bedrock Edition. Аддон вдохновлён идеей дать игрокам больше свободы для творчества и исследований, добавляя элементы, которых не хватает в ванильной версии игры.</p>
+        <p>На данный момент это версия 1.00 — стартовая точка большого пути. В будущем планируются обновления с новыми функциями, улучшениями и, возможно, вашими идеями!</p>
+    </div>
+    
     <div class="content" id="download">
         <h2>Скачать</h2>
-        <p>Текущая версия аддона: <strong>1.21.60</strong> <span class="highlight-orange">нениже</span>.</p>
-        <p>Перед вами последняя версия Universe Craft, совместимая с Minecraft Bedrock Edition 1.21.60 и выше. Следите за обновлениями ниже!</p>
-        <a href="ссылка-на-скачивание" class="download-btn">Скачать Universe Craft</a>
+        <div class="version-filter">
+            <p>Версия для аддона: <strong>1.0</strong></p>
+            <p>Совместимость: Minecraft Bedrock Edition <strong>1.21.60</strong> <span class="highlight-orange">нениже</span></p>
+        </div>
+        <p>Скачайте первую версию Universe Craft и начните своё приключение уже сегодня!</p>
+        <a href="https://drive.google.com/file/d/1Qpwetu7GR7jNJhOvqgPNBIHbajFiUkRH/view?usp=drivesdk" target="_blank" class="download-btn">Скачать Universe Craft 1.0</a>
         <h3>Обновления и изменения</h3>
-        <p>Информация об обновлениях скоро появится. Оставайтесь на связи!</p>
+        <p>Версия 1.00 — начальный релиз. Следите за новостями об улучшениях и новых функциях!</p>
     </div>
 
     <footer>
-        <p>© 2025 OHNIXDOX777. Все права защищены.</p>
+        <p>© 2025 OHNIXDOX777</p>
     </footer>
+
+    <script>
+        const hamburger = document.querySelector('.hamburger');
+        const menu = document.querySelector('.menu');
+
+        hamburger.addEventListener('click', () => {
+            menu.classList.toggle('active');
+        });
+    </script>
 </body>
 </html>
