@@ -3,81 +3,110 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Universe Craft - Аддон для Minecraft Bedrock</title>
+    <title>Universe Craft Add-on</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
-            background-color: #f0f0f0;
-            color: #333;
-            text-align: center;
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(to bottom, #2a2a2a, #4a4a4a);
+            color: #fff;
             margin: 0;
             padding: 0;
         }
         header {
-            background-color: #4CAF50;
-            color: white;
+            background-color: #3d8b40;
             padding: 20px;
+            text-align: center;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
         }
         h1 {
             margin: 0;
+            font-size: 2.5em;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+        nav {
+            background-color: #333;
+            padding: 10px;
+            text-align: center;
+        }
+        nav a {
+            color: #fff;
+            text-decoration: none;
+            margin: 0 20px;
+            font-size: 1.2em;
+            transition: color 0.3s;
+        }
+        nav a:hover {
+            color: #ffcc00;
         }
         .content {
-            max-width: 800px;
-            margin: 20px auto;
-            padding: 20px;
-            background-color: white;
+            max-width: 900px;
+            margin: 30px auto;
+            padding: 25px;
+            background-color: rgba(255, 255, 255, 0.1);
             border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
         }
-        img {
-            max-width: 100%;
-            height: auto;
-            border-radius: 5px;
+        h2 {
+            color: #ffcc00;
+            text-align: center;
+        }
+        p {
+            line-height: 1.6;
+        }
+        .highlight-orange {
+            color: #ff8c00;
+            text-decoration: underline;
         }
         .download-btn {
             display: inline-block;
-            padding: 10px 20px;
-            background-color: #4CAF50;
-            color: white;
+            padding: 12px 25px;
+            background-color: #ffcc00;
+            color: #333;
             text-decoration: none;
             border-radius: 5px;
-            margin-top: 20px;
+            font-weight: bold;
+            transition: background-color 0.3s;
         }
         .download-btn:hover {
-            background-color: #45a049;
+            background-color: #e6b800;
         }
         footer {
-            margin-top: 20px;
-            padding: 10px;
             background-color: #333;
-            color: white;
+            padding: 15px;
+            text-align: center;
+            position: fixed;
+            width: 100%;
+            bottom: 0;
         }
     </style>
 </head>
 <body>
     <header>
-        <h1>Universe Craft - Аддон для Minecraft Bedrock</h1>
+        <h1>Universe Craft Add-on</h1>
     </header>
 
-    <div class="content">
-        <h2>Добро пожаловать!</h2>
-        <p>Universe Craft — это уникальный аддон для Minecraft Bedrock Edition, который добавляет новые блоки, предметы и приключения в ваш мир. Исследуйте космос, стройте звездолёты и открывайте неизведанные галактики!</p>
-        
-        <h3>Особенности:</h3>
-        <ul style="text-align: left; display: inline-block;">
-            <li>Новые космические блоки и ресурсы</li>
-            <li>Уникальные мобы из других планет</li>
-            <li>Крафты для космических технологий</li>
-        </ul>
+    <nav>
+        <a href="#home">Главная страница</a>
+        <a href="#download">Скачать</a>
+    </nav>
 
-        <img src="uncce.jpg" alt="Скриншот Universe Craft">
-        
-        <p>Готовы отправиться в космоc? Скачайте аддон прямо сейчас!</p>
+    <div class="content" id="home">
+        <h2>Universe Craft Add-on</h2>
+        <p>Добро пожаловать в <strong>Universe Craft</strong> — уникальный аддон для Minecraft Bedrock Edition, который переносит вас в мир космических приключений! Исследуйте новые планеты, создавайте космические технологии и открывайте неизведанные горизонты.</p>
+        <p>Этот аддон создан талантливым автором <strong>OHNIXDOX777</strong> (известным в Bedrock Edition) для всех, кто мечтает о звёздах в любимой игре.</p>
+    </div>
+
+    <div class="content" id="download">
+        <h2>Скачать</h2>
+        <p>Текущая версия аддона: <strong>1.21.60</strong> <span class="highlight-orange">нениже</span>.</p>
+        <p>Перед вами последняя версия Universe Craft, совместимая с Minecraft Bedrock Edition 1.21.60 и выше. Следите за обновлениями ниже!</p>
         <a href="ссылка-на-скачивание" class="download-btn">Скачать Universe Craft</a>
+        <h3>Обновления и изменения</h3>
+        <p>Информация об обновлениях скоро появится. Оставайтесь на связи!</p>
     </div>
 
     <footer>
-        <p>© 2025 Universe Craft. Все права защищены.</p>
+        <p>© 2025 OHNIXDOX777. Все права защищены.</p>
     </footer>
 </body>
 </html>
