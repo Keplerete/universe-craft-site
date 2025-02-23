@@ -5,16 +5,91 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Universe Craft Add-on</title>
     <style>
-        body { font-family: Arial, sans-serif; background: linear-gradient(to bottom, #1a1a1a, #3a3a3a); color: #fff; margin: 0; padding: 0; }
-        header { background-color: #2e7d32; padding: 20px; text-align: center; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4); }
-        h1 { margin: 0; font-size: 2.5em; }
-        .hamburger { position: absolute; top: 20px; right: 20px; font-size: 30px; cursor: pointer; color: #fff; }
-        .menu { display: none; position: fixed; top: 0; right: 0; width: 250px; height: 100%; background-color: #333; padding: 20px; }
-        .menu.active { display: block; transform: translateX(0); }
-        .menu a { display: block; color: #1a1a1a; text-decoration: none; font-size: 1.2em; margin: 20px 0; padding: 10px; background-color: #ffd700; border-radius: 5px; text-align: center; }
-        .content { max-width: 900px; margin: 40px auto; padding: 30px; background-color: rgba(255, 255, 255, 0.05); border-radius: 15px; }
-        h2 { color: #ffd700; text-align: center; }
-        footer { background-color: #1a1a1a; padding: 15px; text-align: center; }
+        body { 
+            font-family: Arial, sans-serif; 
+            background: linear-gradient(to bottom, #1a1a1a, #3a3a3a); 
+            color: #fff; 
+            margin: 0; 
+            padding: 0; 
+        }
+        header { 
+            background-color: #2e7d32; 
+            padding: 20px; 
+            text-align: center; 
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4); 
+            position: relative; 
+        }
+        h1 { 
+            margin: 0; 
+            font-size: 2.5em; 
+            animation: fadeIn 1.5s ease; 
+        }
+        .hamburger { 
+            position: absolute; 
+            top: 20px; 
+            right: 20px; 
+            font-size: 30px; 
+            cursor: pointer; 
+            color: #fff; 
+            transition: transform 0.4s ease; 
+        }
+        .hamburger:hover { 
+            transform: rotate(90deg); 
+        }
+        .menu { 
+            position: fixed; 
+            top: 0; 
+            right: -300px; 
+            width: 250px; 
+            height: 100%; 
+            background-color: #333; 
+            padding: 20px; 
+            transition: right 0.6s ease; 
+        }
+        .menu.active { 
+            right: 0; 
+        }
+        .menu a { 
+            display: block; 
+            color: #1a1a1a; 
+            text-decoration: none; 
+            font-size: 1.2em; 
+            margin: 20px 0; 
+            padding: 10px; 
+            background-color: #ffd700; 
+            border-radius: 5px; 
+            text-align: center; 
+            transition: background-color 0.4s ease, transform 0.3s ease; 
+        }
+        .menu a:hover { 
+            background-color: #e6c200; 
+            transform: scale(1.05); 
+        }
+        .content { 
+            max-width: 900px; 
+            margin: 40px auto; 
+            padding: 30px; 
+            background-color: rgba(255, 255, 255, 0.05); 
+            border-radius: 15px; 
+            animation: fadeInUp 1.2s ease; 
+        }
+        h2 { 
+            color: #ffd700; 
+            text-align: center; 
+        }
+        footer { 
+            background-color: #1a1a1a; 
+            padding: 15px; 
+            text-align: center; 
+        }
+        @keyframes fadeIn { 
+            from { opacity: 0; } 
+            to { opacity: 1; } 
+        }
+        @keyframes fadeInUp { 
+            from { opacity: 0; transform: translateY(20px); } 
+            to { opacity: 1; transform: translateY(0); } 
+        }
     </style>
 </head>
 <body>
@@ -25,18 +100,23 @@
     <div class="menu" id="menu">
         <a href="index.html">Главная страница</a>
         <a href="download.html">Скачать</a>
+        <a href="version.html">Версия сайта - v1.00 Website</a>
     </div>
     <div class="content">
         <h2>Universe Craft Add-on</h2>
-        <p>Добро пожаловать в Universe Craft — уникальный аддон для Minecraft Bedrock Edition!</p>
-    </div>
+        <p>Universe Craft — это уникальный аддон для Minecraft Bedrock Edition, созданный для расширения игрового опыта. Идея аддона заключается в том, чтобы добавить новые измерения, предметы и механики, которые позволяют игрокам исследовать вселенную Minecraft по-новому.</p>
+        <p>Аддон был создан <strong>OHNIXDOX777</strong>, известным в сообществе Bedrock Edition за свои креативные проекты. Universe Craft — это его попытка привнести больше приключений и возможностей для творчества в игру.</p>
+        <p>С Universe Craft вы сможете строить космические корабли, исследовать далёкие планеты и создавать уникальные предметы, которых нет в ванильной версии Minecraft. Этот аддон идеально подходит для тех, кто любит исследования и приключения!</p>
+        </div>
     <footer>
         <p>© права защищены 2025г</p>
     </footer>
     <script>
         const hamburger = document.querySelector('.hamburger');
         const menu = document.querySelector('.menu');
-        hamburger.addEventListener('click', () => { menu.classList.toggle('active'); });
+        hamburger.addEventListener('click', () => {
+            menu.classList.toggle('active');
+        });
     </script>
 </body>
 </html>
