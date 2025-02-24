@@ -125,6 +125,62 @@
             from { opacity: 0; transform: translateY(20px); }
             to { opacity: 1; transform: translateY(0); }
         }
+        .filter-buttons button {
+            padding: 8px 12px;
+            margin-right: 5px;
+        }
+
+        .version-list {
+            margin-top: 20px;
+        }
+
+        .version-block {
+            border: 1px solid #ccc;
+            padding: 10px;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+        }
+
+        .version-block span {
+            margin-right: 10px;
+        }
+
+        .version-block a {
+            margin-left: auto;
+        }
+
+        .dropdown {
+            position: relative;
+            display: inline-block;
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: #f9f9f9;
+            min-width: 160px;
+            box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+            z-index: 1;
+        }
+
+        .dropdown-content button {
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+            border: none;
+            background: none;
+            width: 100%;
+            text-align: left;
+        }
+
+        .dropdown-content button:hover {
+            background-color: #f1f1f1;
+        }
+
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
     </style>
 </head>
 <body>
@@ -146,19 +202,4 @@
             <p>1. Скачайте файл аддона по ссылке выше.<br>
                2. Откройте файл в Minecraft Bedrock Edition (нажмите на него, и игра автоматически импортирует аддон).<br>
                3. Зайдите в настройки мира и активируйте аддон.<br>
-               4. Включите экспериментальные функции, если это необходимо для работы аддона.<br>
-               5. Запустите мир и наслаждайтесь игрой!</p>
-        </div>
-    </div>
-    <footer>
-        <p>© права защищены 2025г</p>
-    </footer>
-    <script>
-        const hamburger = document.querySelector('.hamburger');
-        const menu = document.querySelector('.menu');
-        hamburger.addEventListener('click', () => {
-            menu.classList.toggle('active');
-        });
-    </script>
-</body>
-</html>
+               4. Включите экспериментальные функции, если это необходимо для
