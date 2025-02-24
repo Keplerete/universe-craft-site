@@ -5,114 +5,142 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Universe Craft Add-on</title>
   <style>
-    /* Основные стили страницы */
     body {
       font-family: Arial, sans-serif;
       margin: 0;
       padding: 0;
-      background: radial-gradient(circle at center, #000 0%, #0a0a2a 100%);
+      background: linear-gradient(to bottom, #000000 0%, #070734 100%);
       color: #fff;
-      min-height: 100vh;
-      perspective: 1000px;
       overflow-x: hidden;
     }
-    
-    /* Контейнер космического фона с 3D‑эффектами */
+
+    /* Стили для космического фона */
     .space {
       position: fixed;
+      top: 0;
+      left: 0;
       width: 100vw;
       height: 100vh;
+      z-index: -1;
+      overflow: hidden;
+      perspective: 2000px;
+    }
+
+    .stars-container {
+      position: absolute;
+      width: 100%;
+      height: 100%;
       transform-style: preserve-3d;
     }
-    
-    /* Слой звёзд с анимацией и 3D‑смещением */
-    .stars {
+
+    .star {
       position: absolute;
-      width: 200%;
-      height: 200%;
-      background: 
-        radial-gradient(circle at 50% 50%, rgba(255,255,255,0.9) 0.5px, transparent 1px),
-        radial-gradient(circle at 30% 60%, rgba(173,216,230,0.7) 0.5px, transparent 1px),
-        radial-gradient(circle at 70% 20%, rgba(255,99,71,0.6) 0.5px, transparent 1px);
-      background-size: 300px 300px;
-      animation: starMove 40s linear infinite;
-      transform: translateZ(-500px);
+      background: white;
+      border-radius: 50%;
+      animation: twinkle var(--duration) ease-in-out infinite;
     }
-    
-    /* Контейнер галактики с 3D‑эффектом и вращением */
-    .galaxy-container {
+
+    .star::after {
+      content: '';
       position: absolute;
       top: 50%;
       left: 50%;
-      transform: translate(-50%, -50%) rotateX(75deg) rotateZ(30deg);
-      transform-style: preserve-3d;
-      animation: galaxyRotate 120s linear infinite;
+      width: 100%;
+      height: 100%;
+      background: radial-gradient(circle, rgba(255,255,255,0.8) 10%, transparent 70%);
+      transform: translate(-50%, -50%);
     }
-    
-    /* Основной элемент галактики */
+
+    /* Стили для галактики */
+    .galaxy-wrapper {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%) rotateX(70deg);
+      transform-style: preserve-3d;
+      animation: galaxyFloat 40s ease-in-out infinite;
+    }
+
     .galaxy {
       position: relative;
       width: 800px;
       height: 800px;
       transform-style: preserve-3d;
+      animation: rotateGalaxy 120s linear infinite;
     }
-    
-    /* Спиральные рукава галактики с использованием CSS-переменных */
+
+    .core {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 120px;
+      height: 120px;
+      background: radial-gradient(circle, #fff 0%, #ffeb3b 30%, #ff5722 70%);
+      border-radius: 50%;
+      transform: translate(-50%, -50%);
+      filter: blur(30px) brightness(1.2);
+      animation: corePulse 4s ease-in-out infinite;
+    }
+
     .spiral-arm {
       position: absolute;
       width: 100%;
       height: 100%;
-      background: radial-gradient(circle, 
-        rgba(255,255,255,0.8) 0%, 
-        rgba(147,112,219,0.4) 30%, 
+      background: radial-gradient(ellipse at center, 
+        rgba(100, 181, 246, 0.9) 0%,
+        rgba(147, 112, 219, 0.7) 30%,
         transparent 70%);
-      border-radius: 50%;
-      transform: rotateZ(calc(var(--angle) * 1deg))
-                 scale(calc(0.6 + var(--index) * 0.2))
-                 translateZ(calc(var(--index) * 50px));
-      filter: blur(calc(var(--index) * 3px + 5px));
-      opacity: 0.7;
+      clip-path: polygon(50% 50%, 0% 0%, 100% 0%);
+      filter: blur(var(--blur)) drop-shadow(0 0 20px rgba(100, 181, 246, 0.5));
+      transform-origin: center;
+      transform: rotate(var(--angle)) translateZ(var(--depth));
+      opacity: 0.8;
+      animation: armGlow 6s ease-in-out infinite;
     }
-    
-    /* Ядро галактики */
-    .core {
-      position: absolute;
-      width: 150px;
-      height: 150px;
-      background: radial-gradient(circle, #ffd700 0%, #ff4500 50%, transparent 100%);
-      border-radius: 50%;
-      filter: blur(20px);
-      transform: translateZ(50px);
-      animation: corePulse 4s ease-in-out infinite;
-    }
-    
+
     /* Анимации */
-    @keyframes galaxyRotate {
-      0% { transform: translate(-50%, -50%) rotateX(75deg) rotateZ(30deg) rotateY(0deg); }
-      100% { transform: translate(-50%, -50%) rotateX(75deg) rotateZ(30deg) rotateY(360deg); }
+    @keyframes rotateGalaxy {
+      0% { transform: rotateZ(0deg) rotateX(5deg); }
+      100% { transform: rotateZ(360deg) rotateX(5deg); }
     }
-    
-    @keyframes starMove {
-      0% { transform: translateZ(-500px) translateX(0) translateY(0); }
-      100% { transform: translateZ(-500px) translateX(-300px) translateY(-300px); }
+
+    @keyframes galaxyFloat {
+      0%, 100% { transform: translate(-50%, -50%) rotateX(70deg) translateY(0); }
+      50% { transform: translate(-50%, -50%) rotateX(70deg) translateY(-20px); }
     }
-    
+
     @keyframes corePulse {
-      0% { transform: translateZ(50px) scale(1); opacity: 0.8; }
-      50% { transform: translateZ(50px) scale(1.2); opacity: 1; }
-      100% { transform: translateZ(50px) scale(1); opacity: 0.8; }
+      0%, 100% { transform: translate(-50%, -50%) scale(1); }
+      50% { transform: translate(-50%, -50%) scale(1.1); }
     }
-    
-    /* Стили шапки, меню и основного контента */
+
+    @keyframes armGlow {
+      0%, 100% { opacity: 0.7; filter: blur(var(--blur)) drop-shadow(0 0 10px rgba(100, 181, 246, 0.3)); }
+      50% { opacity: 1; filter: blur(var(--blur)) drop-shadow(0 0 30px rgba(100, 181, 246, 0.7)); }
+    }
+
+    @keyframes twinkle {
+      0%, 100% { opacity: 0.3; transform: scale(1); }
+      50% { opacity: 1; transform: scale(1.2); }
+    }
+
+    /* Стили интерфейса */
     header {
-      background-color: #2e7d32;
+      background-color: rgba(46, 125, 50, 0.9);
       padding: 20px;
       text-align: center;
       box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
       position: relative;
       z-index: 1;
+      backdrop-filter: blur(5px);
     }
-    
+
+    h1 {
+      margin: 0;
+      font-size: 2.5em;
+      animation: fadeIn 1.5s ease;
+    }
+
     .hamburger {
       position: absolute;
       top: 20px;
@@ -122,27 +150,28 @@
       color: #fff;
       transition: transform 0.4s ease;
     }
-    
+
     .hamburger:hover {
       transform: rotate(90deg);
     }
-    
+
     .menu {
       position: fixed;
       top: 0;
       right: -300px;
       width: 250px;
       height: 100%;
-      background-color: #333;
+      background-color: rgba(51, 51, 51, 0.95);
       padding: 20px;
       transition: right 0.6s ease;
-      z-index: 1;
+      z-index: 2;
+      backdrop-filter: blur(10px);
     }
-    
+
     .menu.active {
       right: 0;
     }
-    
+
     .menu a {
       display: block;
       color: #1a1a1a;
@@ -153,14 +182,15 @@
       background-color: #ffd700;
       border-radius: 5px;
       text-align: center;
-      transition: background-color 0.4s ease, transform 0.3s ease;
+      transition: all 0.4s ease;
     }
-    
+
     .menu a:hover {
       background-color: #e6c200;
       transform: scale(1.05);
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
     }
-    
+
     .content {
       max-width: 900px;
       margin: 40px auto;
@@ -170,91 +200,124 @@
       animation: fadeInUp 1.2s ease;
       position: relative;
       z-index: 1;
+      backdrop-filter: blur(5px);
     }
-    
-    h2 {
-      color: #ffd700;
-      text-align: center;
-    }
-    
+
     footer {
-      background-color: #1a1a1a;
+      background-color: rgba(26, 26, 26, 0.9);
       padding: 15px;
       text-align: center;
       position: relative;
       z-index: 1;
+      backdrop-filter: blur(5px);
     }
-    
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
     @keyframes fadeInUp {
       from { opacity: 0; transform: translateY(20px); }
       to { opacity: 1; transform: translateY(0); }
     }
+
+    .blurred {
+      filter: blur(5px);
+    }
   </style>
 </head>
 <body>
-  <!-- Космический фон с 3D-эффектами -->
   <div class="space">
-    <div class="stars"></div>
-    <div class="galaxy-container">
+    <div class="stars-container" id="stars-container"></div>
+    <div class="galaxy-wrapper">
       <div class="galaxy">
         <div class="core"></div>
-        <div class="spiral-arm" style="--angle: 0; --index: 0;"></div>
-        <div class="spiral-arm" style="--angle: 120; --index: 1;"></div>
-        <div class="spiral-arm" style="--angle: 240; --index: 2;"></div>
-        <div class="spiral-arm" style="--angle: 60; --index: 3;"></div>
-        <div class="spiral-arm" style="--angle: 180; --index: 4;"></div>
-        <div class="spiral-arm" style="--angle: 300; --index: 5;"></div>
+        <div class="spiral-arm" style="--angle: 0deg; --depth: 100px; --blur: 25px"></div>
+        <div class="spiral-arm" style="--angle: 60deg; --depth: -50px; --blur: 20px"></div>
+        <div class="spiral-arm" style="--angle: 120deg; --depth: 80px; --blur: 30px"></div>
+        <div class="spiral-arm" style="--angle: 180deg; --depth: -30px; --blur: 25px"></div>
+        <div class="spiral-arm" style="--angle: 240deg; --depth: 60px; --blur: 20px"></div>
+        <div class="spiral-arm" style="--angle: 300deg; --depth: -80px; --blur: 30px"></div>
       </div>
     </div>
   </div>
-  
-  <!-- Основная HTML структура -->
+
   <header>
     <h1>Universe Craft Add-on</h1>
     <div class="hamburger">☰</div>
   </header>
+
   <div class="menu" id="menu">
     <a href="index.html">Главная страница</a>
     <a href="download.html">Скачать</a>
     <a href="version.html">Версия сайта - v1.00 Website</a>
   </div>
+
   <div class="content">
     <h2>Universe Craft Add-on</h2>
-    <p>Universe Craft — это уникальный аддон для Minecraft Bedrock Edition, созданный для расширения игрового опыта. Разработанный автором <strong>OHNIXDOX777</strong>, известным в сообществе Bedrock Edition, этот аддон добавляет множество новых возможностей, которые позволяют игрокам исследовать и творить по-новому. Аддон вдохновлён идеей предоставить игрокам больше инструментов для творчества и приключений, расширяя границы ванильной версии Minecraft.</p>
-    <p>В Universe Craft вы найдёте новые <strong>предметы</strong>, такие как кристаллические руды, которые можно использовать для создания уникальных инструментов и оружия. Эти инструменты обладают особыми свойствами, такими как увеличенная прочность или способность добывать редкие ресурсы. Также аддон добавляет новые <strong>блоки</strong>, которые можно использовать для строительства и декорации, придавая вашим постройкам уникальный вид.</p>
-    <p>Для любителей сражений в аддоне предусмотрено новое <strong>оружие</strong>, такое как лазерные мечи и бластеры, которые можно улучшать с помощью специальных материалов. Кроме того, Universe Craft вводит новую <strong>одежду</strong>, дающую бонусы, такие как увеличенная скорость передвижения или повышенная защита от урона. Эти предметы можно крафтить или находить в сундуках по всему миру.</p>
-    <p>Аддон также добавляет новых <strong>сущностей</strong>: от дружелюбных NPC, которые могут торговать с вами, до опасных монстров, охраняющих ценные ресурсы. Для тех, кто любит экспериментировать, в Universe Craft есть система <strong>химических элементов</strong>, позволяющая создавать зелья и улучшенные инструменты. Эта система основана на комбинировании различных элементов, что добавляет глубины игровому процессу.</p>
-    <p>Universe Craft — это идеальный выбор для игроков, которые хотят большего от Minecraft. С этим аддоном вы сможете погрузиться в мир новых возможностей, исследований и творчества, не выходя за рамки любимой игры.</p>
+    <p>Universe Craft — это уникальный аддон для Minecraft Bedrock Edition, созданный для расширения игрового опыта. Разработанный автором <strong>OHNIXDOX777</strong>, этот аддон добавляет множество новых возможностей для творчества и исследований. Основные особенности включают:</p>
+    <ul>
+      <li>Новые кристаллические руды и инструменты</li>
+      <li>Уникальные строительные блоки и декорации</li>
+      <li>Лазерное оружие и броня с особыми свойствами</li>
+      <li>Сложная система химических элементов</li>
+      <li>Новые мобы и NPC</li>
+    </ul>
+    <p>Аддон полностью совместим с последней версией Minecraft Bedrock Edition и регулярно обновляется. Присоединяйтесь к нашему сообществу и начните новое космическое приключение уже сегодня!</p>
   </div>
+
   <footer>
-    <p>© права защищены 2025г</p>
+    <p>© 2024 Universe Craft. Все права защищены</p>
   </footer>
-  
+
   <script>
-    // Динамическое создание дополнительных звёзд
+    // Меню
+    const hamburger = document.querySelector('.hamburger');
+    const menu = document.querySelector('.menu');
+    const content = document.querySelector('.content');
+    const footer = document.querySelector('footer');
+
+    hamburger.addEventListener('click', () => {
+      menu.classList.toggle('active');
+      content.classList.toggle('blurred');
+      footer.classList.toggle('blurred');
+      hamburger.innerHTML = menu.classList.contains('active') ? '✖' : '☰';
+    });
+
+    // Генерация звёзд
     function createStars() {
-      const container = document.querySelector('.stars');
-      for (let i = 0; i < 500; i++) {
+      const container = document.getElementById('stars-container');
+      const starCount = 300;
+      
+      for(let i = 0; i < starCount; i++) {
         const star = document.createElement('div');
-        star.style.position = 'absolute';
-        star.style.width = '2px';
-        star.style.height = '2px';
-        star.style.backgroundColor = hsl(${Math.random() * 360}, 70%, 80%);
-        star.style.left = ${Math.random() * 100}%;
-        star.style.top = ${Math.random() * 100}%;
-        star.style.boxShadow = '0 0 10px white';
-        star.style.animation = twinkle ${2 + Math.random() * 3}s infinite;
+        star.className = 'star';
+        
+        const size = Math.random() * 3 + 1;
+        const x = Math.random() * 100;
+        const y = Math.random() * 100;
+        const duration = Math.random() * 3 + 2;
+        
+        star.style.cssText = `
+          width: ${size}px;
+          height: ${size}px;
+          left: ${x}%;
+          top: ${y}%;
+          --duration: ${duration}s;
+        `;
+        
         container.appendChild(star);
       }
     }
-    createStars();
-    
-    // Обработка клика по гамбургер-меню
-    const hamburger = document.querySelector('.hamburger');
-    const menu = document.querySelector('.menu');
-    hamburger.addEventListener('click', () => {
-      menu.classList.toggle('active');
+
+    // Параллакс-эффект
+    window.addEventListener('scroll', () => {
+      const scrolled = window.pageYOffset;
+      document.documentElement.style.setProperty('--scroll', `${scrolled}px`);
     });
+
+    window.addEventListener('load', createStars);
   </script>
 </body>
 </html>
