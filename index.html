@@ -14,21 +14,19 @@
       overflow-x: hidden;
     }
     
-    /* Космический фон: фиксированная туманность и звёзды */
+    /* Фон: звёзды и туманность */
     .space {
       position: fixed;
       top: 0;
       left: 0;
       width: 100vw;
       height: 100vh;
-      z-index: -1;
+      z-index: -2;
       overflow: hidden;
       perspective: 2000px;
     }
     .nebula {
       position: fixed;
-      top: 50%;
-      left: 50%;
       width: 1200px;
       height: 800px;
       background: radial-gradient(ellipse at center, rgba(128,0,128,0.4), transparent 70%),
@@ -36,7 +34,7 @@
       transform: translate(-50%, -50%);
       filter: blur(50px);
       opacity: 0.7;
-      z-index: -2;
+      z-index: -1;
     }
     .stars-container {
       position: absolute;
@@ -66,14 +64,22 @@
       50% { opacity: 1; transform: scale(1.2); }
     }
     
-    /* Шапка с космическим градиентом и блюром */
+    /* Обёртка для основного контента – для эффекта полного блюра */
+    .page-wrapper {
+      transition: filter 0.5s ease;
+    }
+    .page-wrapper.blurred {
+      filter: blur(10px);
+    }
+    
+    /* Header */
     header {
       background: linear-gradient(135deg, rgba(46,125,50,0.9), rgba(0,128,128,0.7));
       padding: 20px;
       text-align: center;
       box-shadow: 0 4px 12px rgba(0,0,0,0.6);
       position: relative;
-      z-index: 1;
+      z-index: 2;
       backdrop-filter: blur(5px);
       border-bottom: 2px solid rgba(255,255,255,0.2);
     }
@@ -87,7 +93,7 @@
       to { opacity: 1; }
     }
     
-    /* Гамбургер с плавной анимацией и трансформацией в X */
+    /* Гамбургер – полоски с плавной анимацией и трансформацией в X */
     .hamburger {
       position: absolute;
       top: 20px;
@@ -98,7 +104,7 @@
       flex-direction: column;
       justify-content: space-between;
       cursor: pointer;
-      z-index: 2;
+      z-index: 3;
       transition: transform 0.5s ease;
     }
     .hamburger span {
@@ -108,6 +114,9 @@
       border-radius: 2px;
       transition: all 0.5s ease;
     }
+    .hamburger:hover span {
+      transform: scaleX(1.1);
+    }
     .hamburger.open span:nth-child(1) {
       transform: translateY(10px) rotate(45deg);
     }
@@ -116,9 +125,6 @@
     }
     .hamburger.open span:nth-child(3) {
       transform: translateY(-10px) rotate(-45deg);
-    }
-    .hamburger span:hover {
-      transform: scaleX(1.1);
     }
     
     /* Меню */
@@ -131,26 +137,27 @@
       background: linear-gradient(135deg, rgba(51,51,51,0.95), rgba(20,20,40,0.9));
       padding: 20px;
       transition: right 0.6s ease;
-      z-index: 2;
+      z-index: 4;
       backdrop-filter: blur(10px);
       display: flex;
       flex-direction: column;
-      justify-content: flex-start;
+      align-items: center;
     }
     .menu.active {
       right: 0;
     }
-    /* Версия сайта — теперь в верхней части меню, сразу после заголовка */
+    /* Версия сайта – помещена в верхнюю часть меню */
     .version {
       margin-bottom: 20px;
       padding: 10px;
       text-align: center;
-      font-size: 1em;
+      font-size: 1.1em;
       color: #fff;
       background: rgba(0,0,0,0.3);
       border: 1px solid rgba(255,255,255,0.4);
       border-radius: 5px;
       box-shadow: 0 2px 6px rgba(0,0,0,0.5);
+      width: 100%;
     }
     .menu a {
       display: block;
@@ -163,6 +170,7 @@
       border-radius: 5px;
       text-align: center;
       transition: all 0.4s ease;
+      width: 100%;
     }
     .menu a:hover {
       background-color: rgba(255,193,7,0.9);
@@ -171,7 +179,7 @@
       box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
     }
     
-    /* Контент – плитка с космическим дизайном */
+    /* Контент – стильная космическая плитка */
     .content {
       max-width: 900px;
       margin: 40px auto;
@@ -181,7 +189,7 @@
       border-radius: 15px;
       animation: fadeInUp 1.2s ease;
       position: relative;
-      z-index: 1;
+      z-index: 2;
       backdrop-filter: blur(8px);
       box-shadow: 0 4px 12px rgba(0, 0, 0, 0.6);
     }
@@ -190,70 +198,69 @@
       to { opacity: 1; transform: translateY(0); }
     }
     
-    /* Футер – стильная плитка с космическим оформлением */
+    /* Футер – космическая плитка с блюром */
     footer {
       background: linear-gradient(135deg, rgba(26,26,26,0.8), rgba(0,0,30,0.7));
       padding: 15px;
       text-align: center;
       position: relative;
-      z-index: 1;
+      z-index: 2;
       backdrop-filter: blur(12px);
       border-radius: 10px;
       margin: 20px;
       box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
       font-size: 0.9em;
     }
-    
-    .blurred {
-      filter: blur(5px);
-    }
   </style>
 </head>
 <body>
-  <!-- Космический фон: фиксированная туманность и звёзды -->
+  <!-- Фон -->
   <div class="space">
     <div class="nebula"></div>
     <div class="stars-container" id="stars-container"></div>
   </div>
   
-  <!-- Шапка -->
-  <header>
-    <h1>Universe Craft Add-on</h1>
-    <div class="hamburger" id="hamburger">
-      <span></span>
-      <span></span>
-      <span></span>
+  <!-- Обёртка для всего контента (будет размываться при открытии меню) -->
+  <div class="page-wrapper">
+    <!-- Header -->
+    <header>
+      <h1>Universe Craft Add-on</h1>
+      <div class="hamburger" id="hamburger">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+    </header>
+    
+    <!-- Меню -->
+    <div class="menu" id="menu">
+      <div class="version">Версия сайта - v1.00 Website</div>
+      <a href="index.html">Главная страница</a>
+      <a href="download.html">Скачать</a>
     </div>
-  </header>
-  
-  <!-- Меню с версией сайта в верхней части -->
-  <div class="menu" id="menu">
-    <div class="version">Версия сайта - v1.00 Website</div>
-    <a href="index.html">Главная страница</a>
-    <a href="download.html">Скачать</a>
+    
+    <!-- Контент -->
+    <div class="content">
+      <h2>Universe Craft Add-on</h2>
+      <p>Universe Craft — это уникальный аддон для Minecraft Bedrock Edition, созданный для расширения игрового опыта. Разработанный автором <strong>OHNIXDOX777</strong>, этот аддон добавляет множество новых возможностей для творчества и исследований. Основные особенности включают:</p>
+      <ul>
+        <li>Новые кристаллические руды и инструменты</li>
+        <li>Уникальные строительные блоки и декорации</li>
+        <li>Лазерное оружие и броня с особыми свойствами</li>
+        <li>Сложная система химических элементов</li>
+        <li>Новые мобы и NPC</li>
+      </ul>
+      <p>Аддон полностью совместим с последней версией Minecraft Bedrock Edition и регулярно обновляется. Присоединяйтесь к нашему сообществу и начните новое космическое приключение уже сегодня!</p>
+    </div>
+    
+    <!-- Футер -->
+    <footer>
+      <p>© 2024 Universe Craft. Все права защищены</p>
+    </footer>
   </div>
-  
-  <!-- Контент -->
-  <div class="content">
-    <h2>Universe Craft Add-on</h2>
-    <p>Universe Craft — это уникальный аддон для Minecraft Bedrock Edition, созданный для расширения игрового опыта. Разработанный автором <strong>OHNIXDOX777</strong>, этот аддон добавляет множество новых возможностей для творчества и исследований. Основные особенности включают:</p>
-    <ul>
-      <li>Новые кристаллические руды и инструменты</li>
-      <li>Уникальные строительные блоки и декорации</li>
-      <li>Лазерное оружие и броня с особыми свойствами</li>
-      <li>Сложная система химических элементов</li>
-      <li>Новые мобы и NPC</li>
-    </ul>
-    <p>Аддон полностью совместим с последней версией Minecraft Bedrock Edition и регулярно обновляется. Присоединяйтесь к нашему сообществу и начните новое космическое приключение уже сегодня!</p>
-  </div>
-  
-  <!-- Футер -->
-  <footer>
-    <p>© 2024 Universe Craft. Все права защищены</p>
-  </footer>
   
   <script>
-    // Функция создания звёзд – все звёзды имеют единый белый оттенок
+    // Функция создания звёзд (единообразный белый оттенок)
     function createStars() {
       const container = document.getElementById('stars-container');
       const starCount = 300;
@@ -274,19 +281,24 @@
         container.appendChild(star);
       }
     }
-    window.addEventListener('load', createStars);
     
-    // Открытие/закрытие меню с трансформацией гамбургера в X
+    window.addEventListener('load', () => {
+      createStars();
+      // Генерация случайной позиции для туманности
+      const nebula = document.querySelector('.nebula');
+      nebula.style.top = `${Math.random() * 80 + 10}%`;
+      nebula.style.left = `${Math.random() * 80 + 10}%`;
+    });
+    
+    // Открытие/закрытие меню с трансформацией гамбургера и блюром для всей обёртки
     const hamburger = document.getElementById('hamburger');
     const menu = document.getElementById('menu');
-    const content = document.querySelector('.content');
-    const footer = document.querySelector('footer');
+    const pageWrapper = document.querySelector('.page-wrapper');
     
     hamburger.addEventListener('click', () => {
       menu.classList.toggle('active');
       hamburger.classList.toggle('open');
-      content.classList.toggle('blurred');
-      footer.classList.toggle('blurred');
+      pageWrapper.classList.toggle('blurred');
     });
   </script>
 </body>
