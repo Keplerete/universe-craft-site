@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Universe Craft Add-on</title>
   <style>
+    /* Общие стили */
     body {
       font-family: Arial, sans-serif;
       margin: 0;
@@ -14,7 +15,7 @@
       overflow-x: hidden;
     }
     
-    /* Фон: звёзды и туманность */
+    /* Фон: звёзды и туманность (nebula генерируется в случайном месте) */
     .space {
       position: fixed;
       top: 0;
@@ -64,12 +65,22 @@
       50% { opacity: 1; transform: scale(1.2); }
     }
     
-    /* Обёртка для основного контента – для эффекта полного блюра */
+    /* Обёртка для всего контента, который будет размываться при открытом меню */
     .page-wrapper {
       transition: filter 0.5s ease;
     }
     .page-wrapper.blurred {
       filter: blur(10px);
+    }
+    
+    /* Анимация появления текста */
+    .fly-in {
+      opacity: 0;
+      animation: flyIn 1.5s ease forwards;
+    }
+    @keyframes flyIn {
+      0% { transform: translateY(-50px); opacity: 0; }
+      100% { transform: translateY(0); opacity: 1; }
     }
     
     /* Header */
@@ -86,14 +97,9 @@
     h1 {
       margin: 0;
       font-size: 2.5em;
-      animation: fadeIn 1.5s ease;
-    }
-    @keyframes fadeIn {
-      from { opacity: 0; }
-      to { opacity: 1; }
     }
     
-    /* Гамбургер – полоски с плавной анимацией и трансформацией в X */
+    /* Гамбургер – полоски с плавной анимацией и трансформацией в крестик */
     .hamburger {
       position: absolute;
       top: 20px;
@@ -146,7 +152,7 @@
     .menu.active {
       right: 0;
     }
-    /* Версия сайта – помещена в верхнюю часть меню */
+    /* Блок с информацией о версии – размещён вверху меню */
     .version {
       margin-bottom: 20px;
       padding: 10px;
@@ -179,7 +185,7 @@
       box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
     }
     
-    /* Контент – стильная космическая плитка */
+    /* Контент – стильная плитка */
     .content {
       max-width: 900px;
       margin: 40px auto;
@@ -198,7 +204,7 @@
       to { opacity: 1; transform: translateY(0); }
     }
     
-    /* Футер – космическая плитка с блюром */
+    /* Футер – стильная плитка */
     footer {
       background: linear-gradient(135deg, rgba(26,26,26,0.8), rgba(0,0,30,0.7));
       padding: 15px;
@@ -214,17 +220,17 @@
   </style>
 </head>
 <body>
-  <!-- Фон -->
+  <!-- Фон: звёзды и туманность (позиция туманности задаётся случайно) -->
   <div class="space">
     <div class="nebula"></div>
     <div class="stars-container" id="stars-container"></div>
   </div>
   
-  <!-- Обёртка для всего контента (будет размываться при открытии меню) -->
+  <!-- Обёртка для основного контента (подвергается блюру) -->
   <div class="page-wrapper">
-    <!-- Header -->
+    <!-- Header с анимацией появления текста -->
     <header>
-      <h1>Universe Craft Add-on</h1>
+      <h1 class="fly-in">Universe Craft Add-on</h1>
       <div class="hamburger" id="hamburger">
         <span></span>
         <span></span>
@@ -232,35 +238,35 @@
       </div>
     </header>
     
-    <!-- Меню -->
+    <!-- Меню с информацией о версии -->
     <div class="menu" id="menu">
-      <div class="version">Версия сайта - v1.00 Website</div>
+      <div class="version">Версия сайта – v1.00 Website</div>
       <a href="index.html">Главная страница</a>
       <a href="download.html">Скачать</a>
     </div>
     
-    <!-- Контент -->
+    <!-- Контент с анимацией fly-in для заголовка и текста -->
     <div class="content">
-      <h2>Universe Craft Add-on</h2>
-      <p>Universe Craft — это уникальный аддон для Minecraft Bedrock Edition, созданный для расширения игрового опыта. Разработанный автором <strong>OHNIXDOX777</strong>, этот аддон добавляет множество новых возможностей для творчества и исследований. Основные особенности включают:</p>
-      <ul>
-        <li>Новые кристаллические руды и инструменты</li>
-        <li>Уникальные строительные блоки и декорации</li>
-        <li>Лазерное оружие и броня с особыми свойствами</li>
-        <li>Сложная система химических элементов</li>
-        <li>Новые мобы и NPC</li>
-      </ul>
-      <p>Аддон полностью совместим с последней версией Minecraft Bedrock Edition и регулярно обновляется. Присоединяйтесь к нашему сообществу и начните новое космическое приключение уже сегодня!</p>
+      <h2 class="fly-in">О аддоне Universe Craft</h2>
+      <p class="fly-in">
+        Universe Craft — это уникальный аддон для Minecraft Bedrock Edition, который приносит множество новых возможностей для игры. Он создан опытным автором OHNIXDOX777 и помогает игрокам легко расширить функциональность игры. С этим аддоном вы получаете доступ к новым рудным блокам, инструментам, специальному оружию и броне. Каждый элемент разработан просто и понятно, чтобы даже начинающие игроки могли быстро освоиться.
+      </p>
+      <p class="fly-in">
+        Аддон позволяет строить уникальные конструкции, добывать редкие материалы и создавать улучшенные предметы. Новая система обмена с дружественными персонажами помогает получать нужные ресурсы, а возможность улучшения инструментов делает игровой процесс более увлекательным. Universe Craft регулярно обновляется, и разработчики добавляют новые функции, чтобы сделать игру еще интереснее и доступнее.
+      </p>
+      <p class="fly-in">
+        С этим аддоном вы сможете проводить больше времени за творческими экспериментами, улучшать свои навыки и получать удовольствие от игры. Простые и понятные механики позволяют легко освоить новые возможности, а стабильная работа аддона гарантирует, что игровой процесс не будет прерываться. Присоединяйтесь к сообществу пользователей и делитесь своими достижениями. Ваш опыт игры станет ярче, интереснее и намного насыщеннее с Universe Craft!
+      </p>
     </div>
     
-    <!-- Футер -->
+    <!-- Футер с обновлённым годом -->
     <footer>
-      <p>© 2024 Universe Craft. Все права защищены</p>
+      <p>© 2025 Universe Craft. Все права защищены</p>
     </footer>
   </div>
   
   <script>
-    // Функция создания звёзд (единообразный белый оттенок)
+    // Функция создания звёзд (одинаковые белые звёзды)
     function createStars() {
       const container = document.getElementById('stars-container');
       const starCount = 300;
@@ -284,13 +290,13 @@
     
     window.addEventListener('load', () => {
       createStars();
-      // Генерация случайной позиции для туманности
+      // Генерируем случайное положение туманности
       const nebula = document.querySelector('.nebula');
       nebula.style.top = `${Math.random() * 80 + 10}%`;
       nebula.style.left = `${Math.random() * 80 + 10}%`;
     });
     
-    // Открытие/закрытие меню с трансформацией гамбургера и блюром для всей обёртки
+    // Открытие/закрытие меню: гамбургер трансформируется в X, а остальной контент получает блюр
     const hamburger = document.getElementById('hamburger');
     const menu = document.getElementById('menu');
     const pageWrapper = document.querySelector('.page-wrapper');
