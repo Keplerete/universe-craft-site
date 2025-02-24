@@ -3,8 +3,9 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Universe Craft Add-on</title>
+  <title>Universe Craft Add-on - 3D Галактика</title>
   <style>
+    /* Общие стили */
     body {
       font-family: Arial, sans-serif;
       margin: 0;
@@ -15,6 +16,7 @@
       overflow-x: hidden;
     }
 
+    /* Контейнер для космического фона с несколькими слоями */
     .space {
       position: fixed;
       top: 0;
@@ -23,104 +25,108 @@
       height: 100vh;
       z-index: -1;
       overflow: hidden;
-      perspective: 1000px;
     }
 
+    /* Слой звёзд с эффектом параллакса и мерцания */
     .stars {
       position: absolute;
       top: 0;
       left: 0;
-      width: 100%;
-      height: 100%;
+      width: 200%;
+      height: 200%;
       background: 
-        radial-gradient(circle, rgba(255, 255, 255, 0.9) 1px, transparent 2px),
-        radial-gradient(circle, rgba(173, 216, 230, 0.7) 1px, transparent 2px),
-        radial-gradient(circle, rgba(255, 99, 71, 0.6) 1px, transparent 2px),
-        radial-gradient(circle, rgba(147, 112, 219, 0.5) 1px, transparent 2px),
-        radial-gradient(circle, rgba(255, 255, 255, 0.8) 0.8px, transparent 1.5px);
-      background-size: 80px 80px, 120px 120px, 160px 160px, 200px 200px, 100px 100px;
-      background-position: 0 0, 30px 30px, 60px 60px, 90px 90px, 45px 45px;
-      animation: moveStars 50s linear infinite;
+        radial-gradient(circle, rgba(255,255,255,0.9) 1px, transparent 2px),
+        radial-gradient(circle, rgba(173,216,230,0.7) 1px, transparent 2px),
+        radial-gradient(circle, rgba(255,99,71,0.6) 1px, transparent 2px),
+        radial-gradient(circle, rgba(147,112,219,0.5) 1px, transparent 2px);
+      background-size: 100px 100px, 150px 150px, 200px 200px, 250px 250px;
+      animation: moveStars 30s linear infinite, twinkle 3s ease-in-out infinite;
     }
 
-    .twinkle-layer {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      animation: twinkle 2s ease-in-out infinite;
-    }
-
-    .twinkle-layer:nth-child(1) { animation-delay: 0s; }
-    .twinkle-layer:nth-child(2) { animation-delay: 0.5s; }
-    .twinkle-layer:nth-child(3) { animation-delay: 1s; }
-
-    .galaxy {
+    /* Контейнер для галактики с 3D-перспективой */
+    .galaxy-container {
       position: absolute;
       top: 50%;
       left: 50%;
       width: 800px;
       height: 800px;
       transform: translate(-50%, -50%);
-      transform-style: preserve-3d;
-      animation: rotateGalaxy 60s linear infinite;
+      perspective: 1200px;
     }
 
-    .core {
+    /* Сам элемент галактики с сохранением 3D пространства */
+    .galaxy {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      transform-style: preserve-3d;
+      animation: rotateGalaxy3D 60s linear infinite;
+    }
+
+    /* Спиральные рукава, оформленные через градиент и blur для эффекта свечения */
+    .spiral-arm {
       position: absolute;
       top: 50%;
       left: 50%;
-      width: 100px;
-      height: 100px;
-      background: radial-gradient(circle, #fff, #ffeb3b, #ff9800);
-      border-radius: 50%;
-      transform: translate(-50%, -50%);
-      filter: blur(20px);
+      width: 300px;
+      height: 300px;
+      margin: -150px;
+      background: radial-gradient(ellipse at center, rgba(255,255,255,0.8) 0%, rgba(173,216,230,0.4) 40%, rgba(255,99,71,0.2) 60%, transparent 80%);
+      filter: blur(15px);
+      transform-origin: 50% 50%;
+    }
+    /* Размещаем рукава под разными углами для имитации спирали в 3D */
+    .spiral-arm:nth-child(1) {
+      transform: rotateY(0deg) rotateX(30deg) rotateZ(0deg);
+    }
+    .spiral-arm:nth-child(2) {
+      transform: rotateY(120deg) rotateX(30deg) rotateZ(0deg);
+    }
+    .spiral-arm:nth-child(3) {
+      transform: rotateY(240deg) rotateX(30deg) rotateZ(0deg);
     }
 
-    .spiral-arm {
+    /* Дополнительный элемент – туманность для создания глубины */
+    .nebula {
       position: absolute;
-      width: 100%;
-      height: 100%;
-      background: radial-gradient(ellipse at center, rgba(173, 216, 230, 0.8) 0%, rgba(147, 112, 219, 0.4) 30%, transparent 70%);
-      clip-path: polygon(50% 50%, 0% 0%, 100% 0%);
-      filter: blur(20px);
-      transform-origin: center;
-      transform: rotate(var(--angle)) scale(var(--scale)) translateZ(var(--depth));
+      top: 50%;
+      left: 50%;
+      width: 500px;
+      height: 500px;
+      background: radial-gradient(circle, rgba(147,112,219,0.3) 0%, rgba(255,99,71,0.2) 50%, transparent 80%);
+      transform: translate(-50%, -50%);
+      filter: blur(50px);
+      animation: nebulaPulse 12s ease-in-out infinite;
     }
 
-    .spiral-arm:nth-child(1) { --angle: 0deg; --scale: 0.8; --depth: 50px; }
-    .spiral-arm:nth-child(2) { --angle: 60deg; --scale: 0.9; --depth: -20px; }
-    .spiral-arm:nth-child(3) { --angle: 120deg; --scale: 1; --depth: 30px; }
-    .spiral-arm:nth-child(4) { --angle: 180deg; --scale: 0.8; --depth: -50px; }
-    .spiral-arm:nth-child(5) { --angle: 240deg; --scale: 0.9; --depth: 10px; }
-    .spiral-arm:nth-child(6) { --angle: 300deg; --scale: 1; --depth: -30px; }
-
-    @keyframes rotateGalaxy {
-      0% { transform: translate(-50%, -50%) rotateX(10deg) rotateY(5deg) rotateZ(0deg); }
-      100% { transform: translate(-50%, -50%) rotateX(10deg) rotateY(5deg) rotateZ(360deg); }
+    /* Анимации */
+    @keyframes rotateGalaxy3D {
+      0% { transform: rotateY(0deg) rotateX(0deg); }
+      100% { transform: rotateY(360deg) rotateX(360deg); }
     }
-
     @keyframes moveStars {
       0% { transform: translate(0, 0); }
-      100% { transform: translate(-100px, -100px); }
+      100% { transform: translate(-200px, -200px); }
     }
-
     @keyframes twinkle {
-      0% { opacity: 0.5; }
+      0% { opacity: 0.6; }
       50% { opacity: 1; }
-      100% { opacity: 0.5; }
+      100% { opacity: 0.6; }
+    }
+    @keyframes nebulaPulse {
+      0% { transform: translate(-50%, -50%) scale(0.9); opacity: 0.7; }
+      50% { transform: translate(-50%, -50%) scale(1.1); opacity: 0.9; }
+      100% { transform: translate(-50%, -50%) scale(0.9); opacity: 0.7; }
     }
 
+    /* Стили шапки, меню и основного контента */
     header {
       background-color: #2e7d32;
       padding: 20px;
       text-align: center;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.4);
       position: relative;
       z-index: 1;
-      transition: filter 0.6s ease;
     }
     h1 {
       margin: 0;
@@ -148,7 +154,7 @@
       background-color: #333;
       padding: 20px;
       transition: right 0.6s ease;
-      z-index: 2;
+      z-index: 1;
     }
     .menu.active {
       right: 0;
@@ -173,12 +179,11 @@
       max-width: 900px;
       margin: 40px auto;
       padding: 30px;
-      background-color: rgba(255, 255, 255, 0.05);
+      background-color: rgba(255,255,255,0.05);
       border-radius: 15px;
       animation: fadeInUp 1.2s ease;
       position: relative;
       z-index: 1;
-      transition: filter 0.6s ease;
     }
     h2 {
       color: #ffd700;
@@ -190,7 +195,6 @@
       text-align: center;
       position: relative;
       z-index: 1;
-      transition: filter 0.6s ease;
     }
     @keyframes fadeIn {
       from { opacity: 0; }
@@ -203,22 +207,20 @@
   </style>
 </head>
 <body>
+  <!-- Космический фон -->
   <div class="space">
     <div class="stars"></div>
-    <div class="twinkle-layer"></div>
-    <div class="twinkle-layer"></div>
-    <div class="twinkle-layer"></div>
-    <div class="galaxy">
-      <div class="core"></div>
-      <div class="spiral-arm"></div>
-      <div class="spiral-arm"></div>
-      <div class="spiral-arm"></div>
-      <div class="spiral-arm"></div>
-      <div class="spiral-arm"></div>
-      <div class="spiral-arm"></div>
+    <div class="galaxy-container">
+      <div class="galaxy">
+        <div class="spiral-arm"></div>
+        <div class="spiral-arm"></div>
+        <div class="spiral-arm"></div>
+        <div class="nebula"></div>
+      </div>
     </div>
   </div>
 
+  <!-- Основной контент -->
   <header>
     <h1>Universe Craft Add-on</h1>
     <div class="hamburger">☰</div>
@@ -242,23 +244,9 @@
   <script>
     const hamburger = document.querySelector('.hamburger');
     const menu = document.querySelector('.menu');
-    const content = document.querySelector('.content');
-    const footer = document.querySelector('footer');
     hamburger.addEventListener('click', () => {
       menu.classList.toggle('active');
-      content.classList.toggle('blurred');
-      footer.classList.toggle('blurred');
-      if (menu.classList.contains('active')) {
-        hamburger.innerHTML = '✖';
-      } else {
-        hamburger.innerHTML = '☰';
-      }
     });
   </script>
-  <style>
-    .blurred {
-      filter: blur(5px);
-    }
-  </style>
 </body>
 </html>
