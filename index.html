@@ -32,42 +32,54 @@
       width: 100%;
       height: 100%;
       background: 
-        radial-gradient(circle, rgba(255, 255, 255, 0.8) 1px, transparent 2px),
-        radial-gradient(circle, rgba(173, 216, 230, 0.6) 1px, transparent 2px),
-        radial-gradient(circle, rgba(255, 215, 0, 0.5) 1px, transparent 2px),
-        radial-gradient(circle, rgba(255, 165, 0, 0.4) 1px, transparent 2px);
+        radial-gradient(circle, rgba(255, 255, 255, 0.9) 1px, transparent 2px),
+        radial-gradient(circle, rgba(173, 216, 230, 0.7) 1px, transparent 2px),
+        radial-gradient(circle, rgba(255, 99, 71, 0.6) 1px, transparent 2px),
+        radial-gradient(circle, rgba(147, 112, 219, 0.5) 1px, transparent 2px);
       background-size: 100px 100px, 150px 150px, 200px 200px, 250px 250px;
       background-position: 0 0, 25px 25px, 50px 50px, 75px 75px;
-      animation: moveStars 20s linear infinite, breathe 4s ease-in-out infinite;
+      animation: moveStars 25s linear infinite, twinkle 2s ease-in-out infinite;
     }
 
     .galaxy {
       position: absolute;
       top: 50%;
       left: 50%;
-      width: 2px;
-      height: 2px;
+      width: 600px;
+      height: 600px;
       transform: translate(-50%, -50%);
-      animation: breathe 6s ease-in-out infinite;
+      animation: rotateGalaxy 50s linear infinite;
     }
 
     .spiral-arm {
       position: absolute;
-      width: 400px;
-      height: 150px;
-      background: radial-gradient(circle, rgba(255, 255, 255, 0.9) 0%, rgba(173, 216, 230, 0.3) 50%, rgba(255, 165, 0, 0) 70%);
-      filter: blur(15px);
-      transform-origin: 0 50%;
-      animation: rotate 30s linear infinite;
+      width: 100%;
+      height: 100%;
+      background: radial-gradient(ellipse at center, rgba(255, 255, 255, 0.8) 0%, rgba(173, 216, 230, 0.4) 30%, rgba(255, 99, 71, 0.2) 50%, transparent 70%);
+      clip-path: polygon(50% 50%, 0% 0%, 100% 0%);
+      filter: blur(20px);
+      transform-origin: center;
     }
 
-    .spiral-arm:nth-child(1) { transform: rotate(0deg); }
-    .spiral-arm:nth-child(2) { transform: rotate(120deg); }
-    .spiral-arm:nth-child(3) { transform: rotate(240deg); }
+    .spiral-arm:nth-child(1) { transform: rotate(0deg) scale(0.8); }
+    .spiral-arm:nth-child(2) { transform: rotate(120deg) scale(0.9); }
+    .spiral-arm:nth-child(3) { transform: rotate(240deg) scale(1); }
 
-    @keyframes rotate {
-      0% { transform: rotate(0deg); }
-      100% { transform: rotate(360deg); }
+    .nebula {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 400px;
+      height: 400px;
+      background: radial-gradient(circle, rgba(147, 112, 219, 0.3) 0%, rgba(255, 99, 71, 0.2) 50%, transparent 80%);
+      transform: translate(-50%, -50%);
+      filter: blur(40px);
+      animation: nebulaPulse 10s ease-in-out infinite;
+    }
+
+    @keyframes rotateGalaxy {
+      0% { transform: translate(-50%, -50%) rotate(0deg); }
+      100% { transform: translate(-50%, -50%) rotate(360deg); }
     }
 
     @keyframes moveStars {
@@ -75,10 +87,16 @@
       100% { transform: translate(-100px, -100px); }
     }
 
-    @keyframes breathe {
-      0% { transform: translate(-50%, -50%) scale(1); opacity: 0.8; }
-      50% { transform: translate(-50%, -50%) scale(1.1); opacity: 1; }
-      100% { transform: translate(-50%, -50%) scale(1); opacity: 0.8; }
+    @keyframes twinkle {
+      0% { opacity: 0.5; }
+      50% { opacity: 1; }
+      100% { opacity: 0.5; }
+    }
+
+    @keyframes nebulaPulse {
+      0% { transform: translate(-50%, -50%) scale(0.9); opacity: 0.6; }
+      50% { transform: translate(-50%, -50%) scale(1.1); opacity: 0.8; }
+      100% { transform: translate(-50%, -50%) scale(0.9); opacity: 0.6; }
     }
 
     header {
@@ -174,6 +192,7 @@
       <div class="spiral-arm"></div>
       <div class="spiral-arm"></div>
       <div class="spiral-arm"></div>
+      <div class="nebula"></div>
     </div>
   </div>
 
