@@ -45,7 +45,7 @@
     }
     .star {
       position: absolute;
-      background: rgba(255, 255, 255, 0.8);
+      background: rgba(255,255,255,0.8);
       border-radius: 50%;
       animation: twinkle var(--duration) ease-in-out infinite;
       box-shadow: 0 0 5px rgba(255,255,255,0.5);
@@ -65,7 +65,7 @@
       50% { opacity: 1; transform: scale(1.2); }
     }
     
-    /* Обёртка для всего контента, который будет размываться при открытом меню */
+    /* Обёртка для основного контента, который будет размываться при открытии меню */
     .page-wrapper {
       transition: filter 0.5s ease;
     }
@@ -83,7 +83,7 @@
       100% { transform: translateY(0); opacity: 1; }
     }
     
-    /* Header */
+    /* Шапка с анимацией – космический эффект */
     header {
       background: linear-gradient(135deg, rgba(46,125,50,0.9), rgba(0,128,128,0.7));
       padding: 20px;
@@ -97,9 +97,15 @@
     h1 {
       margin: 0;
       font-size: 2.5em;
+      animation: headerGlow 2s infinite;
+    }
+    @keyframes headerGlow {
+      0% { text-shadow: 0 0 10px #fff, 0 0 20px #fff, 0 0 30px #f0f, 0 0 40px #f0f; }
+      50% { text-shadow: 0 0 20px #fff, 0 0 30px #fff, 0 0 40px #ff00ff, 0 0 50px #ff00ff; }
+      100% { text-shadow: 0 0 10px #fff, 0 0 20px #fff, 0 0 30px #f0f, 0 0 40px #f0f; }
     }
     
-    /* Гамбургер – полоски с плавной анимацией и трансформацией в крестик */
+    /* Гамбургер – полоски с плавной анимацией */
     .hamburger {
       position: absolute;
       top: 20px;
@@ -123,6 +129,7 @@
     .hamburger:hover span {
       transform: scaleX(1.1);
     }
+    /* При клике гамбургер превращается в X (хоть и не используется для закрытия меню) */
     .hamburger.open span:nth-child(1) {
       transform: translateY(10px) rotate(45deg);
     }
@@ -133,7 +140,7 @@
       transform: translateY(-10px) rotate(-45deg);
     }
     
-    /* Меню */
+    /* Меню (находится вне page-wrapper, чтобы не размывалось) */
     .menu {
       position: fixed;
       top: 0;
@@ -152,7 +159,19 @@
     .menu.active {
       right: 0;
     }
-    /* Блок с информацией о версии – размещён вверху меню */
+    /* Кнопка закрытия меню (X) */
+    .close-menu {
+      align-self: flex-end;
+      font-size: 24px;
+      cursor: pointer;
+      color: #fff;
+      margin-bottom: 20px;
+      transition: transform 0.4s ease;
+    }
+    .close-menu:hover {
+      transform: scale(1.1);
+    }
+    /* Блок с информацией о версии – размещён в верхней части меню */
     .version {
       margin-bottom: 20px;
       padding: 10px;
@@ -182,7 +201,7 @@
       background-color: rgba(255,193,7,0.9);
       border: 2px solid #fff;
       transform: scale(1.05);
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+      box-shadow: 0 4px 8px rgba(0,0,0,0.3);
     }
     
     /* Контент – стильная плитка */
@@ -197,14 +216,14 @@
       position: relative;
       z-index: 2;
       backdrop-filter: blur(8px);
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.6);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.6);
     }
     @keyframes fadeInUp {
       from { opacity: 0; transform: translateY(20px); }
       to { opacity: 1; transform: translateY(0); }
     }
     
-    /* Футер – стильная плитка */
+    /* Футер – стильная плитка с обновлённым годом */
     footer {
       background: linear-gradient(135deg, rgba(26,26,26,0.8), rgba(0,0,30,0.7));
       padding: 15px;
@@ -214,21 +233,29 @@
       backdrop-filter: blur(12px);
       border-radius: 10px;
       margin: 20px;
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+      box-shadow: 0 4px 8px rgba(0,0,0,0.5);
       font-size: 0.9em;
     }
   </style>
 </head>
 <body>
-  <!-- Фон: звёзды и туманность (позиция туманности задаётся случайно) -->
+  <!-- Фон: звёзды и туманность -->
   <div class="space">
     <div class="nebula"></div>
     <div class="stars-container" id="stars-container"></div>
   </div>
   
-  <!-- Обёртка для основного контента (подвергается блюру) -->
+  <!-- Меню (вне page-wrapper, не размывается) -->
+  <div class="menu" id="menu">
+    <div class="close-menu" id="close-menu">✖</div>
+    <div class="version">Версия сайта – v1.00 Website</div>
+    <a href="index.html">Главная страница</a>
+    <a href="download.html">Скачать</a>
+  </div>
+  
+  <!-- Обёртка для основного контента (будет размываться при открытии меню) -->
   <div class="page-wrapper">
-    <!-- Header с анимацией появления текста -->
+    <!-- Header с анимацией fly-in и космическим свечением -->
     <header>
       <h1 class="fly-in">Universe Craft Add-on</h1>
       <div class="hamburger" id="hamburger">
@@ -238,24 +265,17 @@
       </div>
     </header>
     
-    <!-- Меню с информацией о версии -->
-    <div class="menu" id="menu">
-      <div class="version">Версия сайта – v1.00 Website</div>
-      <a href="index.html">Главная страница</a>
-      <a href="download.html">Скачать</a>
-    </div>
-    
-    <!-- Контент с анимацией fly-in для заголовка и текста -->
+    <!-- Контент с анимацией fly-in -->
     <div class="content">
       <h2 class="fly-in">О аддоне Universe Craft</h2>
       <p class="fly-in">
-        Universe Craft — это уникальный аддон для Minecraft Bedrock Edition, который приносит множество новых возможностей для игры. Он создан опытным автором OHNIXDOX777 и помогает игрокам легко расширить функциональность игры. С этим аддоном вы получаете доступ к новым рудным блокам, инструментам, специальному оружию и броне. Каждый элемент разработан просто и понятно, чтобы даже начинающие игроки могли быстро освоиться.
+        Universe Craft — уникальный аддон для Minecraft Bedrock Edition, который значительно расширяет возможности игры. Он создан опытным автором OHNIXDOX777 и позволяет легко добавлять новые блоки, предметы и инструменты, чтобы игра стала интереснее и удобнее. Благодаря этому аддону вы получаете дополнительные возможности для строительства, добычи ресурсов и сражений, а также новые режимы взаимодействия с игровым миром.
       </p>
       <p class="fly-in">
-        Аддон позволяет строить уникальные конструкции, добывать редкие материалы и создавать улучшенные предметы. Новая система обмена с дружественными персонажами помогает получать нужные ресурсы, а возможность улучшения инструментов делает игровой процесс более увлекательным. Universe Craft регулярно обновляется, и разработчики добавляют новые функции, чтобы сделать игру еще интереснее и доступнее.
+        В аддоне реализованы простые и понятные механики: новые руды, инструменты и блоки позволяют создавать уникальные постройки, а дополнительное оружие и броня дают возможность улучшить боевые навыки. Пользователи оценят стабильную работу, удобное управление и регулярные обновления, которые делают игру более разнообразной.
       </p>
       <p class="fly-in">
-        С этим аддоном вы сможете проводить больше времени за творческими экспериментами, улучшать свои навыки и получать удовольствие от игры. Простые и понятные механики позволяют легко освоить новые возможности, а стабильная работа аддона гарантирует, что игровой процесс не будет прерываться. Присоединяйтесь к сообществу пользователей и делитесь своими достижениями. Ваш опыт игры станет ярче, интереснее и намного насыщеннее с Universe Craft!
+        Universe Craft предлагает интуитивный интерфейс и подробные инструкции, что позволяет быстро освоиться даже новичкам. Присоединяйтесь к сообществу, делитесь своими достижениями и получайте удовольствие от новых игровых возможностей. Этот аддон создан для того, чтобы сделать игру проще и веселее – всё понятно, доступно и интересно!
       </p>
     </div>
     
@@ -266,7 +286,7 @@
   </div>
   
   <script>
-    // Функция создания звёзд (одинаковые белые звёзды)
+    // Функция создания звёзд – все звёзды белые
     function createStars() {
       const container = document.getElementById('stars-container');
       const starCount = 300;
@@ -296,15 +316,22 @@
       nebula.style.left = `${Math.random() * 80 + 10}%`;
     });
     
-    // Открытие/закрытие меню: гамбургер трансформируется в X, а остальной контент получает блюр
+    // Открытие/закрытие меню: при клике на гамбургер или кнопку закрытия
     const hamburger = document.getElementById('hamburger');
     const menu = document.getElementById('menu');
+    const closeMenu = document.getElementById('close-menu');
     const pageWrapper = document.querySelector('.page-wrapper');
     
     hamburger.addEventListener('click', () => {
-      menu.classList.toggle('active');
-      hamburger.classList.toggle('open');
-      pageWrapper.classList.toggle('blurred');
+      menu.classList.add('active');
+      hamburger.classList.add('open');
+      pageWrapper.classList.add('blurred');
+    });
+    
+    closeMenu.addEventListener('click', () => {
+      menu.classList.remove('active');
+      hamburger.classList.remove('open');
+      pageWrapper.classList.remove('blurred');
     });
   </script>
 </body>
