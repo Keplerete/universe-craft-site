@@ -14,7 +14,7 @@
       overflow-x: hidden;
     }
     
-    /* Космический фон со звёздами */
+    /* Космический фон: звёзды и туманность */
     .space {
       position: fixed;
       top: 0;
@@ -25,21 +25,31 @@
       overflow: hidden;
       perspective: 2000px;
     }
-    
+    .nebula {
+      position: absolute;
+      top: 10%;
+      left: 50%;
+      width: 1200px;
+      height: 800px;
+      background: radial-gradient(ellipse at center, rgba(128,0,128,0.4), transparent 70%),
+                  radial-gradient(ellipse at center, rgba(255,20,147,0.3), transparent 70%);
+      transform: translateX(-50%) translateZ(-300px);
+      filter: blur(50px);
+      opacity: 0.7;
+    }
     .stars-container {
       position: absolute;
       width: 100%;
       height: 100%;
       transform-style: preserve-3d;
     }
-    
     .star {
       position: absolute;
-      background: white;
+      background: rgba(255, 255, 255, 0.8);
       border-radius: 50%;
       animation: twinkle var(--duration) ease-in-out infinite;
+      box-shadow: 0 0 5px rgba(255,255,255,0.5);
     }
-    
     .star::after {
       content: '';
       position: absolute;
@@ -50,59 +60,55 @@
       background: radial-gradient(circle, rgba(255,255,255,0.8) 10%, transparent 70%);
       transform: translate(-50%, -50%);
     }
-    
     @keyframes twinkle {
-      0%, 100% { opacity: 0.3; transform: scale(1); }
+      0%, 100% { opacity: 0.4; transform: scale(1); }
       50% { opacity: 1; transform: scale(1.2); }
     }
     
-    /* Шапка */
+    /* Интерфейс - космический стиль плиток */
     header {
-      background-color: rgba(46, 125, 50, 0.9);
+      background: linear-gradient(135deg, rgba(46,125,50,0.9), rgba(0,128,128,0.7));
       padding: 20px;
       text-align: center;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.6);
       position: relative;
       z-index: 1;
       backdrop-filter: blur(5px);
+      border-bottom: 2px solid rgba(255,255,255,0.2);
     }
-    
     h1 {
       margin: 0;
       font-size: 2.5em;
       animation: fadeIn 1.5s ease;
     }
-    
     @keyframes fadeIn {
       from { opacity: 0; }
       to { opacity: 1; }
     }
     
-    /* Гамбургер с полосками */
+    /* Улучшенный гамбургер с анимацией полосок */
     .hamburger {
       position: absolute;
       top: 20px;
       right: 20px;
-      width: 30px;
-      height: 22px;
+      width: 35px;
+      height: 25px;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
       cursor: pointer;
       z-index: 2;
-      transition: transform 0.4s ease-in-out;
+      transition: transform 0.5s ease;
     }
-    
     .hamburger span {
       display: block;
       height: 4px;
-      background-color: #fff;
+      background: linear-gradient(90deg, #fff, #ccc);
       border-radius: 2px;
-      transition: transform 0.4s ease-in-out, opacity 0.4s ease-in-out;
+      transition: all 0.5s ease;
     }
-    
-    .hamburger span:hover {
-      transform: scale(1.1);
+    .hamburger:hover span {
+      transform: scaleX(1.1);
     }
     
     /* Меню */
@@ -112,48 +118,44 @@
       right: -300px;
       width: 250px;
       height: 100%;
-      background-color: rgba(51, 51, 51, 0.95);
+      background: linear-gradient(135deg, rgba(51,51,51,0.95), rgba(20,20,40,0.9));
       padding: 20px;
       transition: right 0.6s ease;
       z-index: 2;
       backdrop-filter: blur(10px);
+      display: flex;
+      flex-direction: column;
     }
-    
     .menu.active {
       right: 0;
     }
-    
     .menu a {
       display: block;
-      color: #1a1a1a;
+      color: #fff;
       text-decoration: none;
       font-size: 1.2em;
       margin: 20px 0;
       padding: 10px;
-      background-color: #ffd700;
+      background-color: rgba(255,215,0,0.9);
       border-radius: 5px;
       text-align: center;
       transition: all 0.4s ease;
     }
-    
     .menu a:hover {
-      background-color: #e6c200;
+      background-color: rgba(255,193,7,0.9);
       transform: scale(1.05);
       box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
     }
-    
-    /* Версия сайта позиционируется внизу меню */
+    /* Версия сайта позиционируется выше, на 10% от низа меню */
     .version {
-      position: absolute;
-      bottom: 20px;
-      left: 0;
-      width: 100%;
+      margin-top: auto;
+      padding-top: 10%;
       text-align: center;
       font-size: 0.9em;
       color: #ddd;
     }
     
-    /* Кнопка закрытия меню (иконка "Х") */
+    /* Кнопка закрытия меню - смещена вверх и вправо */
     .close-menu {
       position: absolute;
       top: 10px;
@@ -162,14 +164,11 @@
       cursor: pointer;
       color: #fff;
       display: none;
-      transition: transform 0.4s ease-in-out;
+      transition: transform 0.4s ease;
     }
-    
     .menu.active .close-menu {
       display: block;
     }
-    
-    /* При открытом меню гамбургер скрывается */
     .menu.active ~ header .hamburger {
       display: none;
     }
@@ -179,30 +178,31 @@
       max-width: 900px;
       margin: 40px auto;
       padding: 30px;
-      background-color: rgba(255, 255, 255, 0.05);
+      background: rgba(20,20,40,0.7);
       border-radius: 15px;
       animation: fadeInUp 1.2s ease;
       position: relative;
       z-index: 1;
-      backdrop-filter: blur(5px);
+      backdrop-filter: blur(8px);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.6);
     }
-    
     @keyframes fadeInUp {
       from { opacity: 0; transform: translateY(20px); }
       to { opacity: 1; transform: translateY(0); }
     }
     
-    /* Футер - плитка с увеличенным блюром и приятным дизайном */
+    /* Футер - плитка с космическим дизайном */
     footer {
-      background-color: rgba(26, 26, 26, 0.8);
+      background: linear-gradient(135deg, rgba(26,26,26,0.8), rgba(0,0,30,0.7));
       padding: 15px;
       text-align: center;
       position: relative;
       z-index: 1;
-      backdrop-filter: blur(10px);
+      backdrop-filter: blur(12px);
       border-radius: 10px;
       margin: 20px;
       box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+      font-size: 0.9em;
     }
     
     .blurred {
@@ -211,12 +211,13 @@
   </style>
 </head>
 <body>
-  <!-- Космический фон со звёздами -->
+  <!-- Космический фон: туманность и звёзды -->
   <div class="space">
+    <div class="nebula"></div>
     <div class="stars-container" id="stars-container"></div>
   </div>
   
-  <!-- Шапка с заголовком и гамбургером -->
+  <!-- Шапка -->
   <header>
     <h1>Universe Craft Add-on</h1>
     <div class="hamburger" id="hamburger">
@@ -226,7 +227,7 @@
     </div>
   </header>
   
-  <!-- Меню с закрывающей иконкой и версией сайта внизу -->
+  <!-- Меню -->
   <div class="menu" id="menu">
     <div class="close-menu" id="close-menu">✖</div>
     <a href="index.html">Главная страница</a>
@@ -234,7 +235,7 @@
     <div class="version">Версия сайта - v1.00 Website</div>
   </div>
   
-  <!-- Основной контент -->
+  <!-- Контент -->
   <div class="content">
     <h2>Universe Craft Add-on</h2>
     <p>Universe Craft — это уникальный аддон для Minecraft Bedrock Edition, созданный для расширения игрового опыта. Разработанный автором <strong>OHNIXDOX777</strong>, этот аддон добавляет множество новых возможностей для творчества и исследований. Основные особенности включают:</p>
@@ -248,12 +249,13 @@
     <p>Аддон полностью совместим с последней версией Minecraft Bedrock Edition и регулярно обновляется. Присоединяйтесь к нашему сообществу и начните новое космическое приключение уже сегодня!</p>
   </div>
   
+  <!-- Футер -->
   <footer>
     <p>© 2024 Universe Craft. Все права защищены</p>
   </footer>
   
   <script>
-    // Функция создания звёзд
+    // Функция создания звёзд (одинаковый космический цвет)
     function createStars() {
       const container = document.getElementById('stars-container');
       const starCount = 300;
