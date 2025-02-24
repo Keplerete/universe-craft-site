@@ -14,7 +14,7 @@
       overflow-x: hidden;
     }
     
-    /* Космический фон: звёзды и туманность */
+    /* Космический фон: фиксированная туманность и звёзды */
     .space {
       position: fixed;
       top: 0;
@@ -26,16 +26,17 @@
       perspective: 2000px;
     }
     .nebula {
-      position: absolute;
-      top: 10%;
+      position: fixed;
+      top: 50%;
       left: 50%;
       width: 1200px;
       height: 800px;
       background: radial-gradient(ellipse at center, rgba(128,0,128,0.4), transparent 70%),
                   radial-gradient(ellipse at center, rgba(255,20,147,0.3), transparent 70%);
-      transform: translateX(-50%) translateZ(-300px);
+      transform: translate(-50%, -50%);
       filter: blur(50px);
       opacity: 0.7;
+      z-index: -2;
     }
     .stars-container {
       position: absolute;
@@ -65,7 +66,7 @@
       50% { opacity: 1; transform: scale(1.2); }
     }
     
-    /* Интерфейс - космический стиль плиток */
+    /* Шапка с космическим градиентом и блюром */
     header {
       background: linear-gradient(135deg, rgba(46,125,50,0.9), rgba(0,128,128,0.7));
       padding: 20px;
@@ -86,7 +87,7 @@
       to { opacity: 1; }
     }
     
-    /* Улучшенный гамбургер с анимацией полосок */
+    /* Гамбургер с плавной анимацией и трансформацией в X */
     .hamburger {
       position: absolute;
       top: 20px;
@@ -107,7 +108,16 @@
       border-radius: 2px;
       transition: all 0.5s ease;
     }
-    .hamburger:hover span {
+    .hamburger.open span:nth-child(1) {
+      transform: translateY(10px) rotate(45deg);
+    }
+    .hamburger.open span:nth-child(2) {
+      opacity: 0;
+    }
+    .hamburger.open span:nth-child(3) {
+      transform: translateY(-10px) rotate(-45deg);
+    }
+    .hamburger span:hover {
       transform: scaleX(1.1);
     }
     
@@ -125,9 +135,22 @@
       backdrop-filter: blur(10px);
       display: flex;
       flex-direction: column;
+      justify-content: flex-start;
     }
     .menu.active {
       right: 0;
+    }
+    /* Версия сайта — теперь в верхней части меню, сразу после заголовка */
+    .version {
+      margin-bottom: 20px;
+      padding: 10px;
+      text-align: center;
+      font-size: 1em;
+      color: #fff;
+      background: rgba(0,0,0,0.3);
+      border: 1px solid rgba(255,255,255,0.4);
+      border-radius: 5px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.5);
     }
     .menu a {
       display: block;
@@ -143,42 +166,18 @@
     }
     .menu a:hover {
       background-color: rgba(255,193,7,0.9);
+      border: 2px solid #fff;
       transform: scale(1.05);
       box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
     }
-    /* Версия сайта позиционируется выше, на 10% от низа меню */
-    .version {
-      margin-top: auto;
-      padding-top: 10%;
-      text-align: center;
-      font-size: 0.9em;
-      color: #ddd;
-    }
     
-    /* Кнопка закрытия меню - смещена вверх и вправо */
-    .close-menu {
-      position: absolute;
-      top: 10px;
-      right: 30px;
-      font-size: 24px;
-      cursor: pointer;
-      color: #fff;
-      display: none;
-      transition: transform 0.4s ease;
-    }
-    .menu.active .close-menu {
-      display: block;
-    }
-    .menu.active ~ header .hamburger {
-      display: none;
-    }
-    
-    /* Контент */
+    /* Контент – плитка с космическим дизайном */
     .content {
       max-width: 900px;
       margin: 40px auto;
       padding: 30px;
       background: rgba(20,20,40,0.7);
+      border: 1px solid rgba(255,255,255,0.2);
       border-radius: 15px;
       animation: fadeInUp 1.2s ease;
       position: relative;
@@ -191,7 +190,7 @@
       to { opacity: 1; transform: translateY(0); }
     }
     
-    /* Футер - плитка с космическим дизайном */
+    /* Футер – стильная плитка с космическим оформлением */
     footer {
       background: linear-gradient(135deg, rgba(26,26,26,0.8), rgba(0,0,30,0.7));
       padding: 15px;
@@ -211,7 +210,7 @@
   </style>
 </head>
 <body>
-  <!-- Космический фон: туманность и звёзды -->
+  <!-- Космический фон: фиксированная туманность и звёзды -->
   <div class="space">
     <div class="nebula"></div>
     <div class="stars-container" id="stars-container"></div>
@@ -227,12 +226,11 @@
     </div>
   </header>
   
-  <!-- Меню -->
+  <!-- Меню с версией сайта в верхней части -->
   <div class="menu" id="menu">
-    <div class="close-menu" id="close-menu">✖</div>
+    <div class="version">Версия сайта - v1.00 Website</div>
     <a href="index.html">Главная страница</a>
     <a href="download.html">Скачать</a>
-    <div class="version">Версия сайта - v1.00 Website</div>
   </div>
   
   <!-- Контент -->
@@ -255,11 +253,10 @@
   </footer>
   
   <script>
-    // Функция создания звёзд (одинаковый космический цвет)
+    // Функция создания звёзд – все звёзды имеют единый белый оттенок
     function createStars() {
       const container = document.getElementById('stars-container');
       const starCount = 300;
-      
       for (let i = 0; i < starCount; i++) {
         const star = document.createElement('div');
         star.className = 'star';
@@ -277,26 +274,19 @@
         container.appendChild(star);
       }
     }
-    
     window.addEventListener('load', createStars);
     
-    // Обработка открытия/закрытия меню
+    // Открытие/закрытие меню с трансформацией гамбургера в X
     const hamburger = document.getElementById('hamburger');
     const menu = document.getElementById('menu');
-    const closeMenu = document.getElementById('close-menu');
     const content = document.querySelector('.content');
     const footer = document.querySelector('footer');
     
     hamburger.addEventListener('click', () => {
-      menu.classList.add('active');
-      content.classList.add('blurred');
-      footer.classList.add('blurred');
-    });
-    
-    closeMenu.addEventListener('click', () => {
-      menu.classList.remove('active');
-      content.classList.remove('blurred');
-      footer.classList.remove('blurred');
+      menu.classList.toggle('active');
+      hamburger.classList.toggle('open');
+      content.classList.toggle('blurred');
+      footer.classList.toggle('blurred');
     });
   </script>
 </body>
