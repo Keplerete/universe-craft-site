@@ -13,8 +13,8 @@
       color: #fff;
       overflow-x: hidden;
     }
-
-    /* Стили для космического фона */
+    
+    /* Космический фон (звёзды) */
     .space {
       position: fixed;
       top: 0;
@@ -25,21 +25,21 @@
       overflow: hidden;
       perspective: 2000px;
     }
-
+    
     .stars-container {
       position: absolute;
       width: 100%;
       height: 100%;
       transform-style: preserve-3d;
     }
-
+    
     .star {
       position: absolute;
       background: white;
       border-radius: 50%;
       animation: twinkle var(--duration) ease-in-out infinite;
     }
-
+    
     .star::after {
       content: '';
       position: absolute;
@@ -50,81 +50,13 @@
       background: radial-gradient(circle, rgba(255,255,255,0.8) 10%, transparent 70%);
       transform: translate(-50%, -50%);
     }
-
-    /* Стили для галактики */
-    .galaxy-wrapper {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%) rotateX(70deg);
-      transform-style: preserve-3d;
-      animation: galaxyFloat 40s ease-in-out infinite;
-    }
-
-    .galaxy {
-      position: relative;
-      width: 800px;
-      height: 800px;
-      transform-style: preserve-3d;
-      animation: rotateGalaxy 120s linear infinite;
-    }
-
-    .core {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      width: 120px;
-      height: 120px;
-      background: radial-gradient(circle, #fff 0%, #ffeb3b 30%, #ff5722 70%);
-      border-radius: 50%;
-      transform: translate(-50%, -50%);
-      filter: blur(30px) brightness(1.2);
-      animation: corePulse 4s ease-in-out infinite;
-    }
-
-    .spiral-arm {
-      position: absolute;
-      width: 100%;
-      height: 100%;
-      background: radial-gradient(ellipse at center, 
-        rgba(100, 181, 246, 0.9) 0%,
-        rgba(147, 112, 219, 0.7) 30%,
-        transparent 70%);
-      clip-path: polygon(50% 50%, 0% 0%, 100% 0%);
-      filter: blur(var(--blur)) drop-shadow(0 0 20px rgba(100, 181, 246, 0.5));
-      transform-origin: center;
-      transform: rotate(var(--angle)) translateZ(var(--depth));
-      opacity: 0.8;
-      animation: armGlow 6s ease-in-out infinite;
-    }
-
-    /* Анимации */
-    @keyframes rotateGalaxy {
-      0% { transform: rotateZ(0deg) rotateX(5deg); }
-      100% { transform: rotateZ(360deg) rotateX(5deg); }
-    }
-
-    @keyframes galaxyFloat {
-      0%, 100% { transform: translate(-50%, -50%) rotateX(70deg) translateY(0); }
-      50% { transform: translate(-50%, -50%) rotateX(70deg) translateY(-20px); }
-    }
-
-    @keyframes corePulse {
-      0%, 100% { transform: translate(-50%, -50%) scale(1); }
-      50% { transform: translate(-50%, -50%) scale(1.1); }
-    }
-
-    @keyframes armGlow {
-      0%, 100% { opacity: 0.7; filter: blur(var(--blur)) drop-shadow(0 0 10px rgba(100, 181, 246, 0.3)); }
-      50% { opacity: 1; filter: blur(var(--blur)) drop-shadow(0 0 30px rgba(100, 181, 246, 0.7)); }
-    }
-
+    
     @keyframes twinkle {
       0%, 100% { opacity: 0.3; transform: scale(1); }
       50% { opacity: 1; transform: scale(1.2); }
     }
-
-    /* Стили интерфейса */
+    
+    /* Шапка */
     header {
       background-color: rgba(46, 125, 50, 0.9);
       padding: 20px;
@@ -134,27 +66,40 @@
       z-index: 1;
       backdrop-filter: blur(5px);
     }
-
+    
     h1 {
       margin: 0;
       font-size: 2.5em;
       animation: fadeIn 1.5s ease;
     }
-
+    
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+    
+    /* Гамбургер с полосками */
     .hamburger {
       position: absolute;
       top: 20px;
       right: 20px;
-      font-size: 30px;
+      width: 30px;
+      height: 22px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
       cursor: pointer;
-      color: #fff;
-      transition: transform 0.4s ease;
+      z-index: 2;
     }
-
-    .hamburger:hover {
-      transform: rotate(90deg);
+    
+    .hamburger span {
+      display: block;
+      height: 4px;
+      background-color: #fff;
+      border-radius: 2px;
     }
-
+    
+    /* Меню */
     .menu {
       position: fixed;
       top: 0;
@@ -167,11 +112,11 @@
       z-index: 2;
       backdrop-filter: blur(10px);
     }
-
+    
     .menu.active {
       right: 0;
     }
-
+    
     .menu a {
       display: block;
       color: #1a1a1a;
@@ -184,13 +129,42 @@
       text-align: center;
       transition: all 0.4s ease;
     }
-
+    
     .menu a:hover {
       background-color: #e6c200;
       transform: scale(1.05);
       box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
     }
-
+    
+    /* Версия сайта выводится снизу меню */
+    .version {
+      margin-top: 40px;
+      text-align: center;
+      font-size: 0.9em;
+      color: #ddd;
+    }
+    
+    /* Кнопка закрытия меню */
+    .close-menu {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      font-size: 24px;
+      cursor: pointer;
+      color: #fff;
+      display: none;
+    }
+    
+    .menu.active .close-menu {
+      display: block;
+    }
+    
+    /* При открытом меню гамбургер скрывается */
+    .menu.active ~ header .hamburger {
+      display: none;
+    }
+    
+    /* Контент */
     .content {
       max-width: 900px;
       margin: 40px auto;
@@ -202,7 +176,13 @@
       z-index: 1;
       backdrop-filter: blur(5px);
     }
-
+    
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    
+    /* Футер */
     footer {
       background-color: rgba(26, 26, 26, 0.9);
       padding: 15px;
@@ -211,49 +191,37 @@
       z-index: 1;
       backdrop-filter: blur(5px);
     }
-
-    @keyframes fadeIn {
-      from { opacity: 0; }
-      to { opacity: 1; }
-    }
-
-    @keyframes fadeInUp {
-      from { opacity: 0; transform: translateY(20px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-
+    
     .blurred {
       filter: blur(5px);
     }
   </style>
 </head>
 <body>
+  <!-- Космический фон со звёздами -->
   <div class="space">
     <div class="stars-container" id="stars-container"></div>
-    <div class="galaxy-wrapper">
-      <div class="galaxy">
-        <div class="core"></div>
-        <div class="spiral-arm" style="--angle: 0deg; --depth: 100px; --blur: 25px"></div>
-        <div class="spiral-arm" style="--angle: 60deg; --depth: -50px; --blur: 20px"></div>
-        <div class="spiral-arm" style="--angle: 120deg; --depth: 80px; --blur: 30px"></div>
-        <div class="spiral-arm" style="--angle: 180deg; --depth: -30px; --blur: 25px"></div>
-        <div class="spiral-arm" style="--angle: 240deg; --depth: 60px; --blur: 20px"></div>
-        <div class="spiral-arm" style="--angle: 300deg; --depth: -80px; --blur: 30px"></div>
-      </div>
-    </div>
   </div>
-
+  
+  <!-- Шапка с заголовком и гамбургером -->
   <header>
     <h1>Universe Craft Add-on</h1>
-    <div class="hamburger">☰</div>
+    <div class="hamburger" id="hamburger">
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
   </header>
-
+  
+  <!-- Меню (без кнопки "Версия сайта", информация о версии выводится внизу) -->
   <div class="menu" id="menu">
+    <div class="close-menu" id="close-menu">✖</div>
     <a href="index.html">Главная страница</a>
     <a href="download.html">Скачать</a>
-    <a href="version.html">Версия сайта - v1.00 Website</a>
+    <div class="version">Версия сайта - v1.00 Website</div>
   </div>
-
+  
+  <!-- Основной контент -->
   <div class="content">
     <h2>Universe Craft Add-on</h2>
     <p>Universe Craft — это уникальный аддон для Minecraft Bedrock Edition, созданный для расширения игрового опыта. Разработанный автором <strong>OHNIXDOX777</strong>, этот аддон добавляет множество новых возможностей для творчества и исследований. Основные особенности включают:</p>
@@ -266,39 +234,24 @@
     </ul>
     <p>Аддон полностью совместим с последней версией Minecraft Bedrock Edition и регулярно обновляется. Присоединяйтесь к нашему сообществу и начните новое космическое приключение уже сегодня!</p>
   </div>
-
+  
   <footer>
     <p>© 2024 Universe Craft. Все права защищены</p>
   </footer>
-
+  
   <script>
-    // Меню
-    const hamburger = document.querySelector('.hamburger');
-    const menu = document.querySelector('.menu');
-    const content = document.querySelector('.content');
-    const footer = document.querySelector('footer');
-
-    hamburger.addEventListener('click', () => {
-      menu.classList.toggle('active');
-      content.classList.toggle('blurred');
-      footer.classList.toggle('blurred');
-      hamburger.innerHTML = menu.classList.contains('active') ? '✖' : '☰';
-    });
-
-    // Генерация звёзд
+    // Функция создания звёзд
     function createStars() {
       const container = document.getElementById('stars-container');
       const starCount = 300;
       
-      for(let i = 0; i < starCount; i++) {
+      for (let i = 0; i < starCount; i++) {
         const star = document.createElement('div');
         star.className = 'star';
-        
         const size = Math.random() * 3 + 1;
         const x = Math.random() * 100;
         const y = Math.random() * 100;
         const duration = Math.random() * 3 + 2;
-        
         star.style.cssText = `
           width: ${size}px;
           height: ${size}px;
@@ -306,18 +259,30 @@
           top: ${y}%;
           --duration: ${duration}s;
         `;
-        
         container.appendChild(star);
       }
     }
-
-    // Параллакс-эффект
-    window.addEventListener('scroll', () => {
-      const scrolled = window.pageYOffset;
-      document.documentElement.style.setProperty('--scroll', `${scrolled}px`);
-    });
-
+    
     window.addEventListener('load', createStars);
+    
+    // Обработка открытия/закрытия меню
+    const hamburger = document.getElementById('hamburger');
+    const menu = document.getElementById('menu');
+    const closeMenu = document.getElementById('close-menu');
+    const content = document.querySelector('.content');
+    const footer = document.querySelector('footer');
+    
+    hamburger.addEventListener('click', () => {
+      menu.classList.add('active');
+      content.classList.add('blurred');
+      footer.classList.add('blurred');
+    });
+    
+    closeMenu.addEventListener('click', () => {
+      menu.classList.remove('active');
+      content.classList.remove('blurred');
+      footer.classList.remove('blurred');
+    });
   </script>
 </body>
 </html>
