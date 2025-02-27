@@ -5,101 +5,222 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Скачать Universe Craft Add-on</title>
     <style>
+        /* Общие стили */
         body {
             font-family: Arial, sans-serif;
-            background: radial-gradient(circle at center, #1a1a1a, #3a3a3a);
-            color: #fff;
             margin: 0;
             padding: 0;
-            position: relative;
+            background: linear-gradient(to bottom, #000000 0%, #070734 100%);
+            color: #fff;
+            overflow-x: hidden;
         }
-        body::before {
-            content: "";
+        
+        /* Фон: звёзды и туманность */
+        .space {
             position: fixed;
             top: 0;
             left: 0;
-            width: 100%;
-            height: 100%;
-            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><circle cx="50" cy="50" r="1" fill="white" opacity="0.5"/></svg>') repeat;
-            animation: twinkle 3s infinite alternate;
+            width: 100vw;
+            height: 100vh;
+            z-index: -2;
+            overflow: hidden;
+            perspective: 2000px;
+        }
+        .nebula {
+            position: fixed;
+            width: 1200px;
+            height: 800px;
+            background: radial-gradient(ellipse at center, rgba(128,0,128,0.4), transparent 70%),
+                        radial-gradient(ellipse at center, rgba(255,20,147,0.3), transparent 70%);
+            transform: translate(-50%, -50%);
+            filter: blur(50px);
+            opacity: 0.7;
             z-index: -1;
         }
-        @keyframes twinkle {
-            0% { opacity: 0.5; }
-            100% { opacity: 1; }
+        .stars-container {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            transform-style: preserve-3d;
         }
+        .star {
+            position: absolute;
+            background: rgba(255,255,255,0.8);
+            border-radius: 50%;
+            animation: twinkle var(--duration) ease-in-out infinite;
+            box-shadow: 0 0 5px rgba(255,255,255,0.5);
+        }
+        .star::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle, rgba(255,255,255,0.8) 10%, transparent 70%);
+            transform: translate(-50%, -50%);
+        }
+        @keyframes twinkle {
+            0%, 100% { opacity: 0.4; transform: scale(1); }
+            50% { opacity: 1; transform: scale(1.2); }
+        }
+        
+        /* Обёртка для основного контента */
+        .page-wrapper {
+            transition: filter 0.5s ease;
+        }
+        .page-wrapper.blurred {
+            filter: blur(10px);
+        }
+        
+        /* Анимация появления текста */
+        .fly-in {
+            opacity: 0;
+            animation: flyIn 1.5s ease forwards;
+        }
+        @keyframes flyIn {
+            0% { transform: translateY(-50px); opacity: 0; }
+            100% { transform: translateY(0); opacity: 1; }
+        }
+        
+        /* Шапка с анимацией */
         header {
-            background-color: #2e7d32;
+            background: linear-gradient(135deg, rgba(46,125,50,0.9), rgba(0,128,128,0.7));
             padding: 20px;
             text-align: center;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.6);
             position: relative;
+            z-index: 2;
+            backdrop-filter: blur(5px);
+            border-bottom: 2px solid rgba(255,255,255,0.2);
         }
         h1 {
             margin: 0;
             font-size: 2.5em;
-            animation: fadeIn 1.5s ease;
+            animation: headerGlow 2s infinite;
         }
+        @keyframes headerGlow {
+            0% { text-shadow: 0 0 10px #fff, 0 0 20px #fff, 0 0 30px #f0f, 0 0 40px #f0f; }
+            50% { text-shadow: 0 0 20px #fff, 0 0 30px #fff, 0 0 40px #ff00ff, 0 0 50px #ff00ff; }
+            100% { text-shadow: 0 0 10px #fff, 0 0 20px #fff, 0 0 30px #f0f, 0 0 40px #f0f; }
+        }
+        
+        /* Гамбургер */
         .hamburger {
             position: absolute;
             top: 20px;
             right: 20px;
-            font-size: 30px;
+            width: 35px;
+            height: 25px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
             cursor: pointer;
-            color: #fff;
-            transition: transform 0.4s ease;
+            z-index: 3;
+            transition: transform 0.5s ease;
         }
-        .hamburger:hover {
-            transform: rotate(90deg);
+        .hamburger span {
+            display: block;
+            height: 4px;
+            background: linear-gradient(90deg, #fff, #ccc);
+            border-radius: 2px;
+            transition: all 0.5s ease;
         }
+        .hamburger:hover span {
+            transform: scaleX(1.1);
+        }
+        .hamburger.open span:nth-child(1) {
+            transform: translateY(10px) rotate(45deg);
+        }
+        .hamburger.open span:nth-child(2) {
+            opacity: 0;
+        }
+        .hamburger.open span:nth-child(3) {
+            transform: translateY(-10px) rotate(-45deg);
+        }
+        
+        /* Меню */
         .menu {
             position: fixed;
             top: 0;
             right: -300px;
             width: 250px;
             height: 100%;
-            background-color: #333;
+            background: linear-gradient(135deg, rgba(51,51,51,0.95), rgba(20,20,40,0.9));
             padding: 20px;
             transition: right 0.6s ease;
+            z-index: 4;
+            backdrop-filter: blur(10px);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
         }
         .menu.active {
             right: 0;
         }
+        .close-menu {
+            align-self: flex-end;
+            font-size: 24px;
+            cursor: pointer;
+            color: #fff;
+            margin-bottom: 20px;
+            transition: transform 0.4s ease;
+        }
+        .close-menu:hover {
+            transform: scale(1.1);
+        }
+        .version {
+            margin-bottom: 20px;
+            padding: 10px;
+            text-align: center;
+            font-size: 1.1em;
+            color: #fff;
+            background: rgba(0,0,0,0.3);
+            border: 1px solid rgba(255,255,255,0.4);
+            border-radius: 5px;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.5);
+            width: 100%;
+        }
         .menu a {
             display: block;
-            color: #1a1a1a;
+            color: #fff;
             text-decoration: none;
             font-size: 1.2em;
             margin: 20px 0;
             padding: 10px;
-            background-color: #ffd700;
+            background-color: rgba(255,215,0,0.9);
             border-radius: 5px;
             text-align: center;
-            transition: background-color 0.4s ease, transform 0.3s ease;
+            transition: all 0.4s ease;
+            width: 100%;
         }
         .menu a:hover {
-            background-color: #e6c200;
+            background-color: rgba(255,193,7,0.9);
+            border: 2px solid #fff;
             transform: scale(1.05);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.3);
         }
+        
+        /* Контент */
         .content {
             max-width: 900px;
             margin: 40px auto;
             padding: 30px;
-            background-color: rgba(255, 255, 255, 0.05);
+            background: rgba(20,20,40,0.7);
+            border: 1px solid rgba(255,255,255,0.2);
             border-radius: 15px;
             animation: fadeInUp 1.2s ease;
+            position: relative;
+            z-index: 2;
+            backdrop-filter: blur(8px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.6);
         }
-        h2 {
-            color: #ffd700;
-            text-align: center;
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
         }
-        .download-info {
-            margin-top: 20px;
-            padding: 15px;
-            background-color: rgba(255, 255, 255, 0.1);
-            border-radius: 10px;
-            animation: fadeInUp 0.8s ease;
-        }
+        
+        /* Стили кнопки скачивания */
         .download-btn {
             padding: 12px 30px;
             background-color: #ffd700;
@@ -113,99 +234,117 @@
         .download-btn:hover {
             transform: scale(1.05);
         }
+        
+        /* Футер */
         footer {
-            background-color: #1a1a1a;
+            background: linear-gradient(135deg, rgba(26,26,26,0.8), rgba(0,0,30,0.7));
             padding: 15px;
             text-align: center;
-        }
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
-        @keyframes fadeInUp {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        .filter-buttons button {
-            padding: 8px 12px;
-            margin-right: 5px;
-        }
-        .version-list {
-            margin-top: 20px;
-        }
-        .version-block {
-            border: 1px solid #ccc;
-            padding: 10px;
-            margin-bottom: 10px;
-            display: flex;
-            align-items: center;
-        }
-        .version-block span {
-            margin-right: 10px;
-        }
-        .version-block a {
-            margin-left: auto;
-        }
-        .dropdown {
             position: relative;
-            display: inline-block;
-        }
-        .dropdown-content {
-            display: none;
-            position: absolute;
-            background-color: #f9f9f9;
-            min-width: 160px;
-            box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
-            z-index: 1;
-        }
-        .dropdown-content button {
-            padding: 12px 16px;
-            text-decoration: none;
-            display: block;
-            border: none;
-            background: none;
-            width: 100%;
-            text-align: left;
-        }
-        .dropdown-content button:hover {
-            background-color: #f1f1f1;
-        }
-        .dropdown:hover .dropdown-content {
-            display: block;
+            z-index: 2;
+            backdrop-filter: blur(12px);
+            border-radius: 10px;
+            margin: 20px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.5);
+            font-size: 0.9em;
         }
     </style>
 </head>
 <body>
-    <header>
-        <h1>Скачать Universe Craft Add-on</h1>
-        <div class="hamburger">☰</div>
-    </header>
+    <!-- Фон: звёзды и туманность -->
+    <div class="space">
+        <div class="nebula"></div>
+        <div class="stars-container" id="stars-container"></div>
+    </div>
+    
+    <!-- Меню -->
     <div class="menu" id="menu">
+        <div class="close-menu" id="close-menu">✖</div>
+        <div class="version">Версия сайта – v1.00 Website</div>
         <a href="index.html">Главная страница</a>
         <a href="download.html">Скачать</a>
-        <a href="version.html">Версия сайта - v1.00 Website</a>
     </div>
-    <div class="content">
-        <h2>Версия 1.21.60</h2>
-        <div class="download-info">
-            <p>Выбрана версия: <strong id="selectedVersion">1.21.60</strong></p>
-            <a href="https://drive.google.com/file/d/1Qpwetu7GR7jNJhOvqgPNBIHbajFiUkRH/view?usp=drivesdk" target="_blank" class="download-btn">Скачать Universe Craft</a>
-            <h3>Как установить аддон и включить эксперименты</h3>
-            <p>1. Скачайте файл аддона по ссылке выше.<br>
-               2. Откройте файл в Minecraft Bedrock Edition (нажмите на него, и игра автоматически импортирует аддон).<br>
-               3. Зайдите в настройки мира и активируйте аддон.<br>
-               4. Включите экспериментальные функции, если это необходимо для работы аддона.<br>
-               5. Запустите мир и наслаждайтесь игрой!</p>
+    
+    <!-- Обёртка для основного контента -->
+    <div class="page-wrapper">
+        <!-- Шапка -->
+        <header>
+            <h1 class="fly-in">Скачать Universe Craft Add-on</h1>
+            <div class="hamburger" id="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </header>
+        
+        <!-- Контент -->
+        <div class="content">
+            <h2 class="fly-in">Версия 1.21.60</h2>
+            <div class="download-info fly-in">
+                <p>Выбрана версия: <strong id="selectedVersion">1.21.60</strong></p>
+                <a href="https://drive.google.com/file/d/1Qpwetu7GR7jNJhOvqgPNBIHbajFiUkRH/view?usp=drivesdk" target="_blank" class="download-btn">Скачать Universe Craft</a>
+                <h3>Как установить аддон и включить эксперименты</h3>
+                <p>1. Скачайте файл аддона по ссылке выше.<br>
+                   2. Откройте файл в Minecraft Bedrock Edition (нажмите на него, и игра автоматически импортирует аддон).<br>
+                   3. Зайдите в настройки мира и активируйте аддон.<br>
+                   4. Включите экспериментальные функции, если это необходимо для работы аддона.<br>
+                   5. Запустите мир и наслаждайтесь игрой!</p>
+            </div>
         </div>
+        
+        <!-- Футер -->
+        <footer>
+            <p>© права защищены 2025г</p>
+        </footer>
     </div>
-    <footer>
-        <p>© права защищены 2025г</p>
-    </footer>
+    
     <script>
-        const hamburger = document.querySelector('.hamburger');
-        const menu = document.querySelector('.menu');
+        // Создание звёзд
+        function createStars() {
+            const container = document.getElementById('stars-container');
+            const starCount = 300;
+            for (let i = 0; i < starCount; i++) {
+                const star = document.createElement('div');
+                star.className = 'star';
+                const size = Math.random() * 3 + 1;
+                const x = Math.random() * 100;
+                const y = Math.random() * 100;
+                const duration = Math.random() * 3 + 2;
+                star.style.cssText = `
+                    width: ${size}px;
+                    height: ${size}px;
+                    left: ${x}%;
+                    top: ${y}%;
+                    --duration: ${duration}s;
+                `;
+                container.appendChild(star);
+            }
+        }
+        
+        window.addEventListener('load', () => {
+            createStars();
+            // Случайное положение туманности
+            const nebula = document.querySelector('.nebula');
+            nebula.style.top = `${Math.random() * 80 + 10}%`;
+            nebula.style.left = `${Math.random() * 80 + 10}%`;
+        });
+        
+        // Управление меню
+        const hamburger = document.getElementById('hamburger');
+        const menu = document.getElementById('menu');
+        const closeMenu = document.getElementById('close-menu');
+        const pageWrapper = document.querySelector('.page-wrapper');
+        
         hamburger.addEventListener('click', () => {
-            menu.classList.toggle('active');
+            menu.classList.add('active');
+            hamburger.classList.add('open');
+            pageWrapper.classList.add('blurred');
+        });
+        
+        closeMenu.addEventListener('click', () => {
+            menu.classList.remove('active');
+            hamburger.classList.remove('open');
+            pageWrapper.classList.remove('blurred');
         });
     </script>
 </body>
