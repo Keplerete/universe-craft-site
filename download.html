@@ -3,34 +3,19 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Выбор мода Universe Craft</title>
+  <title>Скачать Universe Craft Mod</title>
   <style>
     /* Общие стили */
     body {
       font-family: Arial, sans-serif;
       margin: 0;
       padding: 0;
-      background: linear-gradient(to bottom, #000, #070734);
+      background: linear-gradient(to bottom, #000000 0%, #070734 100%);
       color: #fff;
       overflow-x: hidden;
-      position: relative;
     }
-    /* Фон – повторяющиеся звёзды и туманность */
-    body::before {
-      content: "";
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><circle cx="50" cy="50" r="1" fill="white" opacity="0.5"/></svg>') repeat;
-      animation: twinkle 3s infinite alternate;
-      z-index: -1;
-    }
-    @keyframes twinkle {
-      0% { opacity: 0.5; }
-      100% { opacity: 1; }
-    }
+    
+    /* Фон: звёзды и туманность */
     .space {
       position: fixed;
       top: 0;
@@ -75,6 +60,11 @@
       background: radial-gradient(circle, rgba(255,255,255,0.8) 10%, transparent 70%);
       transform: translate(-50%, -50%);
     }
+    @keyframes twinkle {
+      0%, 100% { opacity: 0.4; transform: scale(1); }
+      50% { opacity: 1; transform: scale(1.2); }
+    }
+    
     /* Обёртка для основного контента */
     .page-wrapper {
       transition: filter 0.5s ease;
@@ -82,6 +72,7 @@
     .page-wrapper.blurred {
       filter: blur(10px);
     }
+    
     /* Анимация появления текста */
     .fly-in {
       opacity: 0;
@@ -91,6 +82,7 @@
       0% { transform: translateY(-50px); opacity: 0; }
       100% { transform: translateY(0); opacity: 1; }
     }
+    
     /* Шапка */
     header {
       background: linear-gradient(135deg, rgba(46,125,50,0.9), rgba(0,128,128,0.7));
@@ -112,76 +104,41 @@
       50% { text-shadow: 0 0 20px #fff, 0 0 30px #fff, 0 0 40px #ff00ff, 0 0 50px #ff00ff; }
       100% { text-shadow: 0 0 10px #fff, 0 0 20px #fff, 0 0 30px #f0f, 0 0 40px #f0f; }
     }
-    /* Фильтры – теперь вертикально */
-    .filters {
-      width: 100%;
-      max-width: 300px;
-      margin: 20px auto;
-      display: block;
-    }
-    .filters select {
-      display: block;
-      width: 100%;
-      padding: 10px 15px;
-      margin: 10px 0;
-      font-size: 1em;
-      border-radius: 5px;
-      border: none;
-      background-color: #ffd700;
-      color: #1a1a1a;
-      transition: background-color 0.3s ease;
+    
+    /* Гамбургер */
+    .hamburger {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      width: 35px;
+      height: 25px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
       cursor: pointer;
+      z-index: 10; /* Повышенный z-index для видимости */
+      transition: transform 0.5s ease;
     }
-    .filters select:hover {
-      background-color: #e6c200;
+    .hamburger span {
+      display: block;
+      height: 4px;
+      background: linear-gradient(90deg, #fff, #ccc);
+      border-radius: 2px;
+      transition: all 0.5s ease;
     }
-    /* Блок с инструкцией по установке мода */
-    .install-info {
-      background-color: rgba(255,255,255,0.1);
-      border-radius: 10px;
-      padding: 15px;
-      margin-bottom: 30px;
-      animation: fadeInUp 0.8s ease;
+    .hamburger:hover span {
+      transform: scaleX(1.1);
     }
-    .install-info h3 {
-      margin-top: 0;
+    .hamburger.open span:nth-child(1) {
+      transform: translateY(10px) rotate(45deg);
     }
-    .install-info p {
-      margin: 10px 0;
-      line-height: 1.5;
+    .hamburger.open span:nth-child(2) {
+      opacity: 0;
     }
-    /* Контент */
-    .content {
-      max-width: 900px;
-      margin: 40px auto;
-      padding: 30px;
-      background: rgba(20,20,40,0.7);
-      border: 1px solid rgba(255,255,255,0.2);
-      border-radius: 15px;
-      animation: fadeInUp 1.2s ease;
-      position: relative;
-      z-index: 2;
-      backdrop-filter: blur(8px);
-      box-shadow: 0 4px 12px rgba(0,0,0,0.6);
+    .hamburger.open span:nth-child(3) {
+      transform: translateY(-10px) rotate(-45deg);
     }
-    @keyframes fadeInUp {
-      from { opacity: 0; transform: translateY(20px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-    /* Кнопка скачивания */
-    .download-btn {
-      padding: 12px 30px;
-      background-color: #ffd700;
-      color: #1a1a1a;
-      text-decoration: none;
-      border-radius: 8px;
-      display: inline-block;
-      margin-top: 20px;
-      transition: transform 0.3s ease;
-    }
-    .download-btn:hover {
-      transform: scale(1.05);
-    }
+    
     /* Меню */
     .menu {
       position: fixed;
@@ -243,6 +200,82 @@
       transform: scale(1.05);
       box-shadow: 0 4px 8px rgba(0,0,0,0.3);
     }
+    
+    /* Фильтры – вертикально */
+    .filters {
+      width: 100%;
+      max-width: 300px;
+      margin: 20px auto;
+      display: block;
+    }
+    .filters select {
+      display: block;
+      width: 100%;
+      padding: 10px 15px;
+      margin: 10px 0;
+      font-size: 1em;
+      border-radius: 5px;
+      border: none;
+      background-color: #ffd700;
+      color: #1a1a1a;
+      transition: background-color 0.3s ease;
+      cursor: pointer;
+    }
+    .filters select:hover {
+      background-color: #e6c200;
+    }
+    
+    /* Блок с инструкцией по установке мода */
+    .install-info {
+      background-color: rgba(255,255,255,0.1);
+      border-radius: 10px;
+      padding: 15px;
+      margin-bottom: 30px;
+      /* Убираем свойство display, чтобы блок всегда был видим */
+      /* animation: fadeInUp 0.8s ease; */
+    }
+    .install-info h3 {
+      margin-top: 0;
+    }
+    .install-info p {
+      margin: 10px 0;
+      line-height: 1.5;
+    }
+    
+    /* Контент */
+    .content {
+      max-width: 900px;
+      margin: 40px auto;
+      padding: 30px;
+      background: rgba(20,20,40,0.7);
+      border: 1px solid rgba(255,255,255,0.2);
+      border-radius: 15px;
+      animation: fadeInUp 1.2s ease;
+      position: relative;
+      z-index: 2;
+      backdrop-filter: blur(8px);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.6);
+    }
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    
+    /* Кнопка скачивания */
+    .download-btn {
+      padding: 12px 30px;
+      background-color: #ffd700;
+      color: #1a1a1a;
+      text-decoration: none;
+      border-radius: 8px;
+      display: inline-block;
+      margin-top: 20px;
+      transition: transform 0.3s ease;
+    }
+    .download-btn:hover {
+      transform: scale(1.05);
+    }
+    
     /* Футер */
     footer {
       background: linear-gradient(135deg, rgba(26,26,26,0.8), rgba(0,0,30,0.7));
@@ -370,7 +403,7 @@
       pageWrapper.classList.remove('blurred');
     });
     
-    // Обработка фильтров (фиксированные значения)
+    // Фиксированные значения фильтров
     const minecraftSelect = document.getElementById('minecraftVersion');
     const modSelect = document.getElementById('modVersion');
     minecraftSelect.addEventListener('change', () => {
