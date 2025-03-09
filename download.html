@@ -116,7 +116,7 @@
       flex-direction: column;
       justify-content: space-between;
       cursor: pointer;
-      z-index: 10; /* Повышенный z-index для видимости */
+      z-index: 10;
       transition: transform 0.5s ease;
     }
     .hamburger span {
@@ -231,8 +231,6 @@
       border-radius: 10px;
       padding: 15px;
       margin-bottom: 30px;
-      /* Убираем свойство display, чтобы блок всегда был видим */
-      /* animation: fadeInUp 0.8s ease; */
     }
     .install-info h3 {
       margin-top: 0;
@@ -323,7 +321,7 @@
       <!-- Фильтры -->
       <div class="filters">
         <select id="minecraftVersion">
-          <option value="1.21.0">Версия Minecraft: 1.21.0</option>
+          <option value="1.20.1">Версия Minecraft: 1.20.1</option>
         </select>
         <select id="modVersion">
           <option value="1.0.0">Версия мода: 1.0.0</option>
@@ -332,18 +330,29 @@
       
       <!-- Блок с инструкцией по установке мода -->
       <div class="install-info fly-in">
-        <h3>Как установить мод</h3>
+        <h3>Как установить мод для Minecraft Java Edition</h3>
         <p>1. Скачайте файл мода, нажав на кнопку «Скачать» ниже.</p>
-        <p>2. Откройте проводник и перейдите в папку с модами Minecraft Bedrock Edition.</p>
-        <p>3. Скопируйте скачанный файл в эту папку.</p>
-        <p>4. Запустите игру и активируйте мод в настройках мира.</p>
-        <p>5. Наслаждайтесь игрой!</p>
+        <p>2. Убедитесь, что у вас установлен Minecraft: Java Edition версии 1.20.1.</p>
+        <p>3. Установите загрузчик модов Forge для Minecraft: Java Edition.</p>
+        <ul>
+          <li>Перейдите на официальный сайт Forge (<a href="https://files-forge.net" target="_blank">files-forge.net</a>).</li>
+          <li>Выберите версию Minecraft 1.20.1.</li>
+          <li>Скачайте Installer и запустите его для установки Forge.</li>
+        </ul>
+        <p>4. Найдите папку "mods" в директории Minecraft.</p>
+        <ul>
+          <li>Директория Minecraft обычно находится по пути C:\Users\<ваше_имя>\AppData\Roaming\.minecraft.</li>
+          <li>Убедитесь, что видны скрытые файлы и папки (в Проводнике выберите Вид > Показать скрытые элементы).</li>
+          <li>Если папка "mods" отсутствует, создайте ее.</li>
+        </ul>
+        <p>5. Скопируйте файл мода в папку "mods".</p>
+        <p>6. Запустите Minecraft, выберите профиль Forge и начните игру, чтобы насладиться модом.</p>
       </div>
       
       <!-- Блок с информацией о версии и кнопкой скачивания -->
       <div class="download-info fly-in">
-        <h2>Версия 1.21.60</h2>
-        <p>Выбрана версия: <strong id="selectedVersion">1.21.60</strong></p>
+        <h2>Версия 1.20.1</h2>
+        <p>Выбрана версия: <strong id="selectedVersion">1.20.1</strong></p>
         <a href="https://drive.google.com/file/d/1Qpwetu7GR7jNJhOvqgPNBIHbajFiUkRH/view?usp=drivesdk" target="_blank" class="download-btn">Скачать Universe Craft Mod</a>
       </div>
     </div>
